@@ -1,0 +1,134 @@
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.21022</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{66932CC5-2750-4614-82D1-48BF7E9346B1}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>NplotCompact</RootNamespace>
+    <AssemblyName>NplotCompact</AssemblyName>
+    <ProjectTypeGuids>{4D628B5B-2FBC-4AA6-8C16-197242AEB884};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <PlatformFamilyName>PocketPC</PlatformFamilyName>
+    <PlatformID>4118C335-430C-497f-BE48-11C3316B135E</PlatformID>
+    <OSVersion>5.1</OSVersion>
+    <DeployDirSuffix>NplotCompact</DeployDirSuffix>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <NativePlatformName>Windows Mobile 5.0 Pocket PC SDK</NativePlatformName>
+    <FormFactorID>
+    </FormFactorID>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;$(PlatformFamilyName)</DefineConstants>
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
+    <ErrorReport>prompt</ErrorReport>
+    <FileAlignment>512</FileAlignment>
+    <WarningLevel>4</WarningLevel>
+    <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE;$(PlatformFamilyName)</DefineConstants>
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
+    <ErrorReport>prompt</ErrorReport>
+    <FileAlignment>512</FileAlignment>
+    <WarningLevel>4</WarningLevel>
+    <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="mscorlib" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AdapterUtils.cs" />
+    <Compile Include="ArrowItem.cs" />
+    <Compile Include="AssemblyInfo.cs" />
+    <Compile Include="AxesConstraint.cs" />
+    <Compile Include="Axis.cs" />
+    <Compile Include="BarPlot.cs" />
+    <Compile Include="BasePlot.cs" />
+    <Compile Include="BaseSequencePlot.cs" />
+    <Compile Include="Bitmap.PlotSurface2D.cs" />
+    <Compile Include="CandlePlot.cs" />
+    <Compile Include="DateTimeAxis.cs" />
+    <Compile Include="FilledRegion.cs" />
+    <Compile Include="FontScaler.cs" />
+    <Compile Include="Grid.cs" />
+    <Compile Include="HistogramPlot.cs" />
+    <Compile Include="HorizontalLine.cs" />
+    <Compile Include="IDrawable.cs" />
+    <Compile Include="IGradient.cs" />
+    <Compile Include="ImagePlot.cs" />
+    <Compile Include="IPlot.cs" />
+    <Compile Include="IPlotSurface2D.cs" />
+    <Compile Include="ISequencePlot.cs" />
+    <Compile Include="ISurface.cs" />
+    <Compile Include="ITransform2D.cs" />
+    <Compile Include="LabelAxis.cs" />
+    <Compile Include="LabelPointPlot.cs" />
+    <Compile Include="Legend.cs" />
+    <Compile Include="LegendBase.cs" />
+    <Compile Include="LinearAxis.cs" />
+    <Compile Include="LinearGradient.cs" />
+    <Compile Include="LinePlot.cs" />
+    <Compile Include="LogAxis.cs" />
+    <Compile Include="Marker.cs" />
+    <Compile Include="MarkerItem.cs" />
+    <Compile Include="NPlotException.cs" />
+    <Compile Include="PageAlignedPhysicalAxis.cs" />
+    <Compile Include="PhysicalAxis.cs" />
+    <Compile Include="PiAxis.cs" />
+    <Compile Include="PiePlot.cs" />
+    <Compile Include="PlotSurface2D.cs" />
+    <Compile Include="PointD.cs" />
+    <Compile Include="PointPlot.cs" />
+    <Compile Include="RectangleBrushes.cs" />
+    <Compile Include="RectangleD.cs" />
+    <Compile Include="SequenceAdapter.cs" />
+    <Compile Include="StartStep.cs" />
+    <Compile Include="StepGradient.cs" />
+    <Compile Include="StepPlot.cs" />
+    <Compile Include="TextItem.cs" />
+    <Compile Include="TradingDateTimeAxis.cs" />
+    <Compile Include="Transform2D.cs" />
+    <Compile Include="Utils.cs" />
+    <Compile Include="VerticalLine.cs" />
+    <Compile Include="Windows.PlotSurface2D.cs">
+      <SubType>Component</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Properties\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CompactFramework.CSharp.targets" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}">
+        <HostingProcess disable="1" />
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
