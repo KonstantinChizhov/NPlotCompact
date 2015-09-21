@@ -166,12 +166,6 @@ namespace NPlot
 
 
 		/// <summary>
-		/// Smoothing mode to use when drawing plots.
-		/// </summary>
-		System.Drawing.Drawing2D.SmoothingMode SmoothingMode { get; set; }
-
-
-		/// <summary>
 		/// Add an axis constraint to the plot surface. Axis constraints can
 		/// specify relative world-pixel scalings, absolute axis positions etc.
 		/// </summary>

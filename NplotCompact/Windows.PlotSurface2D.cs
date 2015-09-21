@@ -49,9 +49,6 @@ namespace NPlot.Windows
 	/// </remarks>
 	public class PlotSurface2D : System.Windows.Forms.Control, IPlotSurface2D, ISurface
 	{
-
-        private System.Windows.Forms.ToolTip coordinates_;
-
 		private System.Collections.ArrayList selectedObjects_;
         private NPlot.PlotSurface2D ps_;
 
@@ -60,23 +57,7 @@ namespace NPlot.Windows
 		private Axis xAxis2ZoomCache_;
 		private Axis yAxis2ZoomCache_;
 
-        /// <summary>
-		/// Flag to display a coordinates in a tooltip.
-		/// </summary>
-		public bool ShowCoordinates
-		{
-			get
-			{
-				return this.coordinates_.Active;
-			}
-			set
-			{
-				this.coordinates_.Active = value;
-			}
-		}
-
-
-		/// <summary>
+    	/// <summary>
 		/// Default constructor.
 		/// </summary>
 		public PlotSurface2D()
@@ -105,7 +86,6 @@ namespace NPlot.Windows
 		private void InitializeComponent()
 		{
 			this.components = new System.ComponentModel.Container();
-			this.coordinates_ = new System.Windows.Forms.ToolTip(this.components);
 			// 
 			// PlotSurface2D
 			// 
@@ -604,23 +584,6 @@ namespace NPlot.Windows
 		}
 
 
-		/// <summary>
-		/// Set smoothing mode for drawing plot objects.
-		/// </summary>
-	
-		public System.Drawing.Drawing2D.SmoothingMode SmoothingMode 
-		{ 
-			get
-			{
-				return ps_.SmoothingMode;
-			}
-			set
-			{
-				ps_.SmoothingMode = value;
-			}
-		}
-
-
         /// <summary>
 		/// Mouse down event handler.
 		/// </summary>
@@ -701,43 +664,7 @@ namespace NPlot.Windows
 			if (dirty)
 			{
 				Refresh();
-			}
-
-            // Update coordinates if necessary. 
-
-			if ( coordinates_.Active )
-			{
-				// we are here
-				Point here = new Point( e.X, e.Y );
-				if ( ps_.PlotAreaBoundingBoxCache.Contains(here) )
-				{
-					coordinates_.ShowAlways = true;
-					
-					// according to Måns Erlandson, this can sometimes be the case.
-					if (this.PhysicalXAxis1Cache == null)
-						return;
-					if (this.PhysicalYAxis1Cache == null)
-						return;
-
-					double x = this.PhysicalXAxis1Cache.PhysicalToWorld( here, true );
-					double y = this.PhysicalYAxis1Cache.PhysicalToWorld( here, true );
-					string s = "";
-					if (!DateTimeToolTip)
-					{
-						s = "(" + x.ToString("g4") + "," + y.ToString("g4") + ")"; 
-					}
-					else
-					{
-						DateTime dateTime = new DateTime((long)x);
-						s = dateTime.ToShortDateString() + " " + dateTime.ToLongTimeString() + Environment.NewLine + y.ToString("f4");
-					}
-					coordinates_.SetToolTip( this, s );
-				}
-				else
-				{
-					coordinates_.ShowAlways = false;
-				}
-			}
+			}		
 
 		}
 
@@ -929,14 +856,6 @@ namespace NPlot.Windows
 					Console.WriteLine( "caught\n" );
 				}
 			}
-		}
-
-
-		private void NPlot_PrintPage(object sender, PrintPageEventArgs ev) 
-		{
-			Rectangle r = ev.MarginBounds;
-			this.Draw( ev.Graphics, r );
-			ev.HasMorePages = false;
 		}
 	
 		
@@ -2738,7 +2657,6 @@ namespace NPlot.Windows
 
 				menuItems = new ArrayList();
 				menuItems.Add( new PlotZoomBackMenuItem( "Original Dimensions", 0, new EventHandler(this.mnuOriginalDimensions_Click) ) );
-				menuItems.Add( new PlotShowCoordinatesMenuItem( "Show World Coordinates", 1, new EventHandler(this.mnuDisplayCoordinates_Click) ) ); 
 				menuItems.Add( new PlotMenuSeparator(2) );
 				menuItems.Add( new PlotMenuItem( "Print", 3, new EventHandler(this.mnuPrint_Click )) );
 				menuItems.Add( new PlotMenuItem( "Print Preview", 4, new EventHandler(this.mnuPrintPreview_Click) ) );
@@ -2772,11 +2690,6 @@ namespace NPlot.Windows
 			private void mnuPrintPreview_Click(object sender, System.EventArgs e) 
 			{
 				plotSurface2D_.Print( true );
-			}
-
-			private void mnuDisplayCoordinates_Click(object sender, System.EventArgs e)
-			{
-				plotSurface2D_.ShowCoordinates = !plotSurface2D_.ShowCoordinates;
 			}
 
 			private void rightMenu__Popup(object sender, System.EventArgs e)

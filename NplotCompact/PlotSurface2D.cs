@@ -113,7 +113,6 @@ namespace NPlot
         private System.Collections.ArrayList zPositions_;
         private System.Collections.SortedList ordering_;
 
-        private System.Drawing.Drawing2D.SmoothingMode smoothingMode_;
 
 		private ArrayList axesConstraints_ = null;
 
@@ -417,22 +416,6 @@ namespace NPlot
 				plotBackBrush_ = value;
 				plotBackColor_ = null;
 				plotBackImage_ = null;
-			}
-		}
-
-
-		/// <summary>
-		/// Smoothing mode to use when drawing plots.
-		/// </summary>
-		public System.Drawing.Drawing2D.SmoothingMode SmoothingMode 
-		{ 
-			get
-			{
-				return smoothingMode_;
-			}
-			set
-			{
-				this.smoothingMode_ = value;
 			}
 		}
 

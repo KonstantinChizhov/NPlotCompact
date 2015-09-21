@@ -318,22 +318,6 @@ namespace NPlot
 
 
 			/// <summary>
-			/// Smoothing mode to use when drawing plots.
-			/// </summary>
-			public System.Drawing.Drawing2D.SmoothingMode SmoothingMode 
-			{ 
-				get
-				{
-					return ps_.SmoothingMode;
-				}
-				set
-				{
-					ps_.SmoothingMode = value;
-				}
-			}
-
-
-			/// <summary>
 			/// The bitmap width
 			/// </summary>
 			public int Width 
