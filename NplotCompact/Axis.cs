@@ -960,18 +960,18 @@ namespace NPlot
                 }
 				
 				// determine angle of axis in degrees
-				double theta = Math.Atan2(
-					axisPhysicalMax.Y - axisPhysicalMin.Y,
-					axisPhysicalMax.X - axisPhysicalMin.X );
-				theta = theta * 180.0f / Math.PI;
+				//double theta = Math.Atan2(
+				//	axisPhysicalMax.Y - axisPhysicalMin.Y,
+				//	axisPhysicalMax.X - axisPhysicalMin.X );
+				//theta = theta * 180.0f / Math.PI;
 
-				PointF average = new PointF(
-					(axisPhysicalMax.X + axisPhysicalMin.X)/2.0f,
-					(axisPhysicalMax.Y + axisPhysicalMin.Y)/2.0f );
+				//PointF average = new PointF(
+				//	(axisPhysicalMax.X + axisPhysicalMin.X)/2.0f,
+				//	(axisPhysicalMax.Y + axisPhysicalMin.Y)/2.0f );
 
-				g.TranslateTransform( offset.X , offset.Y );	// this is done last.
-				g.TranslateTransform( average.X, average.Y );
-				g.RotateTransform( (float)theta );				// this is done first.
+				//g.TranslateTransform( offset.X , offset.Y );	// this is done last.
+				//g.TranslateTransform( average.X, average.Y );
+				//g.RotateTransform( (float)theta );				// this is done first.
 
 				SizeF labelSize = g.MeasureString( Label, labelFontScaled_);
 
@@ -990,18 +990,18 @@ namespace NPlot
 					drawFormat_ );
 
 				// now work out physical bounds of label. 
-				Matrix m = g.Transform;
+				//Matrix m = g.Transform;
 				PointF[] recPoints = new PointF[2];
 				recPoints[0] = new PointF( -labelSize.Width/2.0f, -labelSize.Height/2.0f );
 				recPoints[1] = new PointF( labelSize.Width/2.0f, labelSize.Height/2.0f );
-				m.TransformPoints( recPoints );
+				//m.TransformPoints( recPoints );
 
 				int x1 = (int)Math.Min( recPoints[0].X, recPoints[1].X );
 				int x2 = (int)Math.Max( recPoints[0].X, recPoints[1].X );
 				int y1 = (int)Math.Min( recPoints[0].Y, recPoints[1].Y );
 				int y2 = (int)Math.Max( recPoints[0].Y, recPoints[1].Y );
 
-				g.ResetTransform();
+				//g.ResetTransform();
 
 				// and return label bounding box.
 				return new Rectangle( x1, y1, (x2-x1), (y2-y1) );
@@ -1152,15 +1152,15 @@ namespace NPlot
 					}
 					
 
-					g.TranslateTransform( rotatePoint.X, rotatePoint.Y );
+					//g.TranslateTransform( rotatePoint.X, rotatePoint.Y );
 
-					g.RotateTransform( actualAngle );
+					//g.RotateTransform( actualAngle );
 					
-					Matrix m = g.Transform;
+					//Matrix m = g.Transform;
 					PointF[] recPoints = new PointF[2];
 					recPoints[0] = new PointF( 0.0f, -(textSize.Height / 2) );
 					recPoints[1] = new PointF( textSize.Width, textSize.Height );
-					m.TransformPoints( recPoints );
+					//m.TransformPoints( recPoints );
 
 					float t_x1 = Math.Min( recPoints[0].X, recPoints[1].X );
 					float t_x2 = Math.Max( recPoints[0].X, recPoints[1].X );
@@ -1184,7 +1184,7 @@ namespace NPlot
 
 					labelOffset = new Point( (int)t_x2, (int)t_y2 );
 
-					g.ResetTransform();
+					//g.ResetTransform();
 
 					//g.DrawRectangle( new Pen(Color.Purple), boundingBox.X, boundingBox.Y, boundingBox.Width, boundingBox.Height );
 
