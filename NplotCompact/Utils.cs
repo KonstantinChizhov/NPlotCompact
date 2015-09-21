@@ -45,9 +45,9 @@ namespace NPlot
 
 		/// <summary>
 		/// Numbers less than this are considered insignificant. This number is
-		/// bigger than double.Epsilon.
+		/// bigger than float.Epsilon.
 		/// </summary>
-		public const double Epsilon = double.Epsilon * 1000.0;
+		public const float Epsilon = float.Epsilon * 1000.0f;
 		
 
 		/// <summary>
@@ -56,7 +56,7 @@ namespace NPlot
 		/// <param name="a">first number to compare</param>
 		/// <param name="b">second number to compare</param>
 		/// <returns>true if equal, false otherwise</returns>
-		public static bool DoubleEqual( double a, double b )
+		public static bool DoubleEqual( float a, float b )
 		{
 			if ( System.Math.Abs(a-b) < Epsilon )
 			{
@@ -71,9 +71,9 @@ namespace NPlot
 		/// </summary>
 		/// <param name="a">first value to swap.</param>
 		/// <param name="b">second value to swap.</param>
-		public static void Swap( ref double a, ref double b )
+		public static void Swap( ref float a, ref float b )
 		{
-			double c = a;
+			float c = a;
 			a = b;
 			b = c;
 		}
@@ -104,24 +104,24 @@ namespace NPlot
 
 
 		/// <summary>
-		/// Converts an object of type DateTime or IConvertible to double representation. 
-		/// Mapping is 1:1. Note: the System.Convert.ToDouble method can not convert a boxed 
-		/// DateTime to double. This implementation can - but the "is" check probably makes
+		/// Converts an object of type DateTime or IConvertible to float representation. 
+		/// Mapping is 1:1. Note: the System.Convert.ToSingle method can not convert a boxed 
+		/// DateTime to float. This implementation can - but the "is" check probably makes
 		/// it much slower.
 		/// </summary>
-		/// <remarks>Compare speed with System.Convert.ToDouble and revise code that calls this if significant speed difference.</remarks>
-		/// <param name="o">The object to convert to double.</param>
-		/// <returns>double value associated with the object.</returns>
-		public static double ToDouble( object o )
+		/// <remarks>Compare speed with System.Convert.ToSingle and revise code that calls this if significant speed difference.</remarks>
+		/// <param name="o">The object to convert to float.</param>
+		/// <returns>float value associated with the object.</returns>
+		public static float ToSingle( object o )
 		{
 			if (o is DateTime)
 			{
-				return (double)(((DateTime)o).Ticks);
+				return (float)(((DateTime)o).Ticks);
 			}
 
 			else if (o is IConvertible)
 			{
-				return System.Convert.ToDouble(o);
+				return System.Convert.ToSingle(o);
 			}
 
 			throw new NPlotException( "Invalid datatype" );
@@ -131,37 +131,37 @@ namespace NPlot
 		/// <summary>
 		/// Returns the minimum and maximum values in an IList. The members of the list
 		/// can be of different types - any type for which the function Utils.ConvertToDouble
-		/// knows how to convert into a double.
+		/// knows how to convert into a float.
 		/// </summary>
 		/// <param name="a">The IList to search.</param>
 		/// <param name="min">The minimum value.</param>
 		/// <param name="max">The maximum value.</param>
 		/// <returns>true if min max set, false otherwise (a == null or zero length).</returns>
-		public static bool ArrayMinMax( IList a, out double min, out double max )
+		public static bool ArrayMinMax( IList a, out float min, out float max )
 		{
 			if ( a == null || a.Count == 0 )
 			{
-				min = 0.0;
-				max = 0.0;
+				min = 0.0f;
+				max = 0.0f;
 				return false;
 			}
 
-			min = Utils.ToDouble(a[0]);
-			max = Utils.ToDouble(a[0]);
+			min = Utils.ToSingle(a[0]);
+			max = Utils.ToSingle(a[0]);
 			
 			foreach ( object o in a )
 			{
 
-				double e = Utils.ToDouble(o);
+				float e = Utils.ToSingle(o);
 
-				if ( (min.Equals (double.NaN)) && (!e.Equals (double.NaN)) )
+				if ( (min.Equals (float.NaN)) && (!e.Equals (float.NaN)) )
 				{
-					// if min/max are double.NaN and the current value not, then
+					// if min/max are float.NaN and the current value not, then
 					// set them to the current value.
 					min = e;
 					max = e;
 				}
-				if (!double.IsNaN(e))
+				if (!float.IsNaN(e))
 				{
 					if (e < min)
 					{
@@ -174,11 +174,11 @@ namespace NPlot
 				}
 			}
 			
-			if (min.Equals (double.NaN))
+			if (min.Equals (float.NaN))
 			{
-				// if min == double.NaN, then max is also double.NaN
-				min = 0.0;
-				max = 0.0;
+				// if min == float.NaN, then max is also float.NaN
+				min = 0.0f;
+				max = 0.0f;
 				return false;
 			}
 
@@ -195,36 +195,36 @@ namespace NPlot
 		/// <param name="columnName">The name of the column in the row collection to search over.</param>
 		/// <returns>true is min max set, false otherwise (a = null or zero length).</returns>
 		public static bool RowArrayMinMax( DataRowCollection rows, 
-			out double min, out double max, string columnName )
+			out float min, out float max, string columnName )
 		{
-			// double[] is a reference type and can be null, if it is then I reckon the best
-			// values for min and max are also null. double is a value type so can't be set
+			// float[] is a reference type and can be null, if it is then I reckon the best
+			// values for min and max are also null. float is a value type so can't be set
 			//	to null. So min an max return object, and we understand that if it is not null
-			// it is a boxed double (same trick I use lots elsewhere in the lib). The 
+			// it is a boxed float (same trick I use lots elsewhere in the lib). The 
 			// wonderful comment I didn't write at the top should explain everything.
 			if ( rows == null || rows.Count == 0 )
 			{
-				min = 0.0;
-				max = 0.0;
+				min = 0.0f;
+				max = 0.0f;
 				return false;
 			}
 
-			min = Utils.ToDouble( (rows[0])[columnName] );
-			max = Utils.ToDouble( (rows[0])[columnName] );
+			min = Utils.ToSingle( (rows[0])[columnName] );
+			max = Utils.ToSingle( (rows[0])[columnName] );
 
 			foreach ( DataRow r in rows ) 
 			{
-				double e = Utils.ToDouble( r[columnName] );
+				float e = Utils.ToSingle( r[columnName] );
 
-				if ( (min.Equals (double.NaN)) && (!e.Equals (double.NaN)) )
+				if ( (min.Equals (float.NaN)) && (!e.Equals (float.NaN)) )
 				{
-					// if min/max are double.NaN and the current value not, then
+					// if min/max are float.NaN and the current value not, then
 					// set them to the current value.
 					min = e;
 					max = e;
 				}
 
-				if (!double.IsNaN(e))
+				if (!float.IsNaN(e))
 				{
 					if (e < min)
 					{
@@ -236,11 +236,11 @@ namespace NPlot
 					}
 				}
 			}
-			if (min.Equals (double.NaN))
+			if (min.Equals (float.NaN))
 			{
-				// if min == double.NaN, then max is also double.NaN
-				min = 0.0;
-				max = 0.0;
+				// if min == float.NaN, then max is also float.NaN
+				min = 0.0f;
+				max = 0.0f;
 				return false;
 			}
 
@@ -258,27 +258,27 @@ namespace NPlot
 		/// <param name="columnName">The name of the column in the row collection to search over.</param>
 		/// <returns>true is min max set, false otherwise (a = null or zero length).</returns>
 		public static bool DataViewArrayMinMax( DataView data, 
-			out double min, out double max, string columnName )
+			out float min, out float max, string columnName )
 		{
-			// double[] is a reference type and can be null, if it is then I reckon the best
-			// values for min and max are also null. double is a value type so can't be set
+			// float[] is a reference type and can be null, if it is then I reckon the best
+			// values for min and max are also null. float is a value type so can't be set
 			//	to null. So min an max return object, and we understand that if it is not null
-			// it is a boxed double (same trick I use lots elsewhere in the lib). The 
+			// it is a boxed float (same trick I use lots elsewhere in the lib). The 
 			// wonderful comment I didn't write at the top should explain everything.
 			if ( data == null || data.Count == 0 )
 			{
-				min = 0.0;
-				max = 0.0;
+				min = 0.0f;
+				max = 0.0f;
 				return false;
 			}
 
-			min = Utils.ToDouble( (data[0])[columnName] );
-			max = Utils.ToDouble( (data[0])[columnName] );
+			min = Utils.ToSingle( (data[0])[columnName] );
+			max = Utils.ToSingle( (data[0])[columnName] );
 
 			for (int i=0; i<data.Count; ++i)
 			{
 
-				double e = Utils.ToDouble( data[i][columnName] );
+				float e = Utils.ToSingle( data[i][columnName] );
 
 				if (e < min)
 				{
@@ -305,7 +305,7 @@ namespace NPlot
 		public static PointF UnitVector( PointF a, PointF b )
 		{
 			PointF dir = new PointF( b.X - a.X, b.Y - a.Y );
-			double dirNorm = System.Math.Sqrt( dir.X*dir.X + dir.Y*dir.Y );
+            float dirNorm = (float)System.Math.Sqrt(dir.X * dir.X + dir.Y * dir.Y);
 			if ( dirNorm > 0.0f )
 			{
 				dir = new PointF( 
@@ -321,10 +321,10 @@ namespace NPlot
 		/// <param name="initial">The font to scale.</param>
 		/// <param name="scale">Scale by this factor.</param>
 		/// <returns>The scaled font.</returns>
-		public static Font ScaleFont( Font initial, double scale )
+		public static Font ScaleFont( Font initial, float scale )
 		{
 			FontStyle fs = initial.Style;
-			double sz = initial.Size;
+			float sz = initial.Size;
 			sz = sz * scale ;
 			string nm = initial.Name;
 			return new Font( nm, (float)sz, fs );

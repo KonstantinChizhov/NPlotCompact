@@ -1031,8 +1031,8 @@ namespace NPlot.Windows
                             PointF physicalWorldMax = pMax;
 							physicalWorldMin.X -= diffX;
 							physicalWorldMax.X -= diffX;
-							double newWorldMin = axis.PhysicalToWorld(physicalWorldMin, pMin, pMax, false);
-							double newWorldMax = axis.PhysicalToWorld(physicalWorldMax, pMin, pMax, false);
+							float newWorldMin = axis.PhysicalToWorld(physicalWorldMin, pMin, pMax, false);
+							float newWorldMax = axis.PhysicalToWorld(physicalWorldMax, pMin, pMax, false);
 							axis.WorldMin = newWorldMin;
 							axis.WorldMax = newWorldMax;
 						}
@@ -1046,8 +1046,8 @@ namespace NPlot.Windows
                             PointF physicalWorldMax = pMax;
 							physicalWorldMin.X -= diffX;
 							physicalWorldMax.X -= diffX;
-							double newWorldMin = axis.PhysicalToWorld(physicalWorldMin, pMin, pMax, false);
-							double newWorldMax = axis.PhysicalToWorld(physicalWorldMax, pMin, pMax, false);
+							float newWorldMin = axis.PhysicalToWorld(physicalWorldMin, pMin, pMax, false);
+							float newWorldMax = axis.PhysicalToWorld(physicalWorldMax, pMin, pMax, false);
 							axis.WorldMin = newWorldMin;
 							axis.WorldMax = newWorldMax;
 						}
@@ -1140,8 +1140,8 @@ namespace NPlot.Windows
 							PointF physicalWorldMax = pMax;
 							physicalWorldMin.Y -= diffY;
 							physicalWorldMax.Y -= diffY;
-							double newWorldMin = axis.PhysicalToWorld(physicalWorldMin, pMin, pMax, false);
-							double newWorldMax = axis.PhysicalToWorld(physicalWorldMax, pMin, pMax, false);
+							float newWorldMin = axis.PhysicalToWorld(physicalWorldMin, pMin, pMax, false);
+							float newWorldMax = axis.PhysicalToWorld(physicalWorldMax, pMin, pMax, false);
 							axis.WorldMin = newWorldMin;
 							axis.WorldMax = newWorldMax;
 						}
@@ -1155,8 +1155,8 @@ namespace NPlot.Windows
 							PointF physicalWorldMax = pMax;
 							physicalWorldMin.Y -= diffY;
 							physicalWorldMax.Y -= diffY;
-							double newWorldMin = axis.PhysicalToWorld(physicalWorldMin, pMin, pMax, false);
-							double newWorldMax = axis.PhysicalToWorld(physicalWorldMax, pMin, pMax, false);
+							float newWorldMin = axis.PhysicalToWorld(physicalWorldMin, pMin, pMax, false);
+							float newWorldMax = axis.PhysicalToWorld(physicalWorldMax, pMin, pMax, false);
 							axis.WorldMin = newWorldMin;
 							axis.WorldMax = newWorldMax;
 						}
@@ -1303,7 +1303,7 @@ namespace NPlot.Windows
 
 							PointF pMin = physicalAxis_.PhysicalMin;
 							PointF pMax = physicalAxis_.PhysicalMax;
-							double physicalWorldLength = Math.Sqrt((pMax.X - pMin.X) * (pMax.X - pMin.X) + (pMax.Y - pMin.Y) * (pMax.Y - pMin.Y));
+                            float physicalWorldLength = (float)Math.Sqrt((pMax.X - pMin.X) * (pMax.X - pMin.X) + (pMax.Y - pMin.Y) * (pMax.Y - pMin.Y));
 
 							float prop = (float)(physicalWorldLength * dist / sensitivity_);
 							prop *= 2;
@@ -1324,8 +1324,8 @@ namespace NPlot.Windows
 							physicalWorldMin.Y -= relativePosY * prop;
 							physicalWorldMax.Y += (1 - relativePosY) * prop;
 							
-							double newWorldMin = axis_.PhysicalToWorld(physicalWorldMin, pMin, pMax, false);
-							double newWorldMax = axis_.PhysicalToWorld(physicalWorldMax, pMin, pMax, false);
+							float newWorldMin = axis_.PhysicalToWorld(physicalWorldMin, pMin, pMax, false);
+							float newWorldMax = axis_.PhysicalToWorld(physicalWorldMax, pMin, pMax, false);
 							axis_.WorldMin = newWorldMin;
 							axis_.WorldMax = newWorldMax;
 							

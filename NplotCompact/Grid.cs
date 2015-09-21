@@ -163,7 +163,7 @@ namespace NPlot
 		{
 			for (int i=0; i<a.Count; ++i)
 			{
-				PointF p1 = axis.WorldToPhysical((double)a[i], true);
+				PointF p1 = axis.WorldToPhysical((float)a[i], true);
 				PointF p2 = p1;
 				PointF p3 = orthogonalAxis.PhysicalMax;
 				PointF p4 = orthogonalAxis.PhysicalMin;

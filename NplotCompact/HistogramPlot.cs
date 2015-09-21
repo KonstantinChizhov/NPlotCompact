@@ -87,7 +87,7 @@ namespace NPlot
 
 				// (1) determine the top left hand point of the bar (assuming not centered)
 				PointD p1 = data[i];
-				if ( double.IsNaN(p1.X) || double.IsNaN(p1.Y) )
+				if ( float.IsNaN(p1.X) || float.IsNaN(p1.Y) )
 					continue;
 				
 				// (2) determine the top right hand point of the bar (assuming not centered)
@@ -95,22 +95,22 @@ namespace NPlot
 				if (i+1 != data.Count)
 				{
 					p2 = data[i+1];
-					if ( double.IsNaN(p2.X) || double.IsNaN(p2.Y) )
+					if ( float.IsNaN(p2.X) || float.IsNaN(p2.Y) )
 						continue;
 					p2.Y = p1.Y;
 				}
 				else if (i != 0)
 				{
 					p2 = data[i-1];
-					if ( double.IsNaN(p2.X) || double.IsNaN(p2.Y) )
+					if ( float.IsNaN(p2.X) || float.IsNaN(p2.Y) )
 						continue;
-					double offset = p1.X - p2.X;
+					float offset = p1.X - p2.X;
 					p2.X = p1.X + offset;
 					p2.Y = p1.Y;
 				}
 				else
 				{
-					double offset = 1.0f;
+					float offset = 1.0f;
 					p2.X = p1.X + offset;
 					p2.Y = p1.Y;
 				}
@@ -118,7 +118,7 @@ namespace NPlot
 				// (3) now account for plots this may be stacked on top of.
 				HistogramPlot currentPlot = this;
 				yoff = 0.0f;
-				double yval = 0.0f;
+				float yval = 0.0f;
 				while (currentPlot.isStacked_)
 				{
 					SequenceAdapter stackedToData = new SequenceAdapter(
@@ -137,7 +137,7 @@ namespace NPlot
 				// (4) now account for centering
 				if ( center_ )
 				{
-					double offset = ( p2.X - p1.X ) / 2.0f;
+					float offset = ( p2.X - p1.X ) / 2.0f;
 					p1.X -= offset;
 					p2.X -= offset;
 				}
@@ -211,7 +211,7 @@ namespace NPlot
 		private float baseWidth_ = 1.0f;
         /// <summary>
         /// The width of the histogram bar as a proportion of the data spacing 
-        /// (in range 0.0 - 1.0).
+        /// (in range 0.0f - 1.0f).
         /// </summary>
 		public float BaseWidth
 		{
@@ -221,13 +221,13 @@ namespace NPlot
 			}
 			set
 			{
-				if (value > 0.0 && value <= 1.0)
+				if (value > 0.0f && value <= 1.0f)
 				{
 					baseWidth_ = value;
 				}
 				else
 				{
-					throw new NPlotException( "Base width must be between 0.0 and 1.0" );
+					throw new NPlotException( "Base width must be between 0.0f and 1.0f" );
 				}
 			}
 		}
@@ -255,7 +255,7 @@ namespace NPlot
 			if (data.Count < 2)
 			{
 				p1 = data[0];
-				p1.X -= 1.0;
+				p1.X -= 1.0f;
 				p2 = data[0];
 				p3 = p1;
 				p4 = p2;
@@ -268,8 +268,8 @@ namespace NPlot
 				p4 = data[data.Count-1];
 			}
 
-			double offset1;
-			double offset2;
+			float offset1;
+			float offset2;
 
 			if (!center_)
 			{
@@ -298,7 +298,7 @@ namespace NPlot
 
 			if ( this.isStacked_ )
 			{
-				double tmpMax = 0.0f;
+				float tmpMax = 0.0f;
 				ArrayList adapterList = new ArrayList();
 
 				HistogramPlot currentPlot = this;
@@ -317,7 +317,7 @@ namespace NPlot
 				
 				for (int i=0; i<adapters[0].Count; ++i)
 				{
-					double tmpHeight = 0.0f;
+					float tmpHeight = 0.0f;
 					for (int j=0; j<adapters.Length; ++j)
 					{
 						tmpHeight += adapters[j][i].Y;
@@ -327,7 +327,7 @@ namespace NPlot
 
 				Axis a = new LinearAxis(0.0f,tmpMax);
 				// TODO make 0.08 a parameter.
-				a.IncreaseRange( 0.08 );
+				a.IncreaseRange( 0.08f );
 				return a;
 			}
 			else
@@ -341,11 +341,11 @@ namespace NPlot
 
 
 		/*
-		private double centerLine_ = 0.0;
+		private float centerLine_ = 0.0f;
 		/// <summary>
 		/// Histogram bars extend from the data value to this value. Default value is 0.
 		/// </summary>
-		public double CenterLine
+		public float CenterLine
 		{
 			get
 			{
@@ -487,7 +487,7 @@ namespace NPlot
         /// <summary>
         /// Horizontal position of histogram columns is offset by this much (in world coordinates).
         /// </summary>
-        public double BaseOffset
+        public float BaseOffset
         {
             set
             {
@@ -498,7 +498,7 @@ namespace NPlot
                 return baseOffset_;
             }
         }
-        private double baseOffset_;
+        private float baseOffset_;
 
 
     }

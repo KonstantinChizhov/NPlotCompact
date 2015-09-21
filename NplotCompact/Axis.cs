@@ -75,7 +75,7 @@ namespace NPlot
 		/// 
         /// Setting this raises the WorldMinChanged event and the WorldExtentsChanged event.
         /// </summary>
-		public virtual double WorldMax
+		public virtual float WorldMax
 		{
 			get
 			{
@@ -92,7 +92,7 @@ namespace NPlot
                 */
             }
 		}
-		private double worldMax_;
+		private float worldMax_;
 		
 
 		/// <summary>
@@ -104,7 +104,7 @@ namespace NPlot
 		/// 
 		/// Setting this raises the WorldMinChanged event and the WorldExtentsChanged event.
 		/// </summary>
-		public virtual double WorldMin
+		public virtual float WorldMin
 		{
 			get
 			{
@@ -121,7 +121,7 @@ namespace NPlot
                 */
             }
 		}
-		private double worldMin_;
+		private float worldMin_;
 
 
 		/// <summary>
@@ -613,8 +613,8 @@ namespace NPlot
 		/// </summary>
 		private void Init()
 		{
-			this.worldMax_ = double.NaN;
-			this.worldMin_ = double.NaN;
+			this.worldMax_ = float.NaN;
+			this.worldMin_ = float.NaN;
 			this.Hidden = false;
 			this.SmallTickSize = 2;
 			this.LargeTickSize = 6;
@@ -664,7 +664,7 @@ namespace NPlot
 		/// </summary>
 		/// <param name="worldMin">The minimum world coordinate.</param>
 		/// <param name="worldMax">The maximum world coordinate.</param>
-		public Axis( double worldMin, double worldMax )
+		public Axis( float worldMin, float worldMax )
 		{
 			this.Init();
 			this.WorldMin = worldMin;
@@ -687,9 +687,9 @@ namespace NPlot
 		/// </summary>
 		/// <param name="coord">the world value to test</param>
 		/// <returns>true if outside limits, false otherwise</returns>
-		public bool OutOfRange( double coord )
+		public bool OutOfRange( float coord )
 		{
-			if (double.IsNaN(WorldMin) || double.IsNaN(WorldMax))
+			if (float.IsNaN(WorldMin) || float.IsNaN(WorldMax))
 			{
 				throw new NPlotException( "world min / max not set" );
 			}
@@ -719,9 +719,9 @@ namespace NPlot
 			}
 
 			// mins
-			if (!double.IsNaN(a.worldMin_))
+			if (!float.IsNaN(a.worldMin_))
 			{
-				if (double.IsNaN(worldMin_))
+				if (float.IsNaN(worldMin_))
 				{
 					WorldMin = a.WorldMin;
 				}
@@ -735,9 +735,9 @@ namespace NPlot
 			}
 
 			// maxs.
-			if (!double.IsNaN(a.worldMax_))
+			if (!float.IsNaN(a.worldMax_))
 			{
-				if (double.IsNaN(worldMax_))
+				if (float.IsNaN(worldMax_))
 				{
 					WorldMax = a.WorldMax;
 				}
@@ -763,7 +763,7 @@ namespace NPlot
 		/// <remarks>Not sure how much time is spent in this often called function. If it's lots, then
 		/// worth optimizing (there is scope to do so).</remarks>
 		public virtual PointF WorldToPhysical( 
-			double coord, 
+			float coord, 
 			PointF physicalMin, 
 			PointF physicalMax, 
 			bool clip )
@@ -818,12 +818,12 @@ namespace NPlot
 
 			// (3) we are inside range or don't want to clip.
 
-			double range = WorldMax - WorldMin;
-			double prop = (double)((coord - WorldMin) / range);
+			float range = WorldMax - WorldMin;
+			float prop = (float)((coord - WorldMin) / range);
 
 			// Force clipping at bounding box largeClip times that of real bounding box 
 			// anyway. This is effectively at infinity.
-			const double largeClip = 100.0;
+			const float largeClip = 100.0f;
 			if (prop > largeClip && clip)
 				prop = largeClip;
 
@@ -857,7 +857,7 @@ namespace NPlot
 		/// <param name="physicalMax">The physical position corresponding to the world maximum of the axis.</param>
 		/// <param name="clip">If true, the world value will be clipped to WorldMin or WorldMax as appropriate if it lies outside this range.</param>
 		/// <returns>The world value corresponding to the projection of the point p onto the axis.</returns>
-		public virtual double PhysicalToWorld( 
+		public virtual float PhysicalToWorld( 
 			PointF p, 
 			PointF physicalMin, 
 			PointF physicalMax,
@@ -894,7 +894,7 @@ namespace NPlot
 			// dist of point projection on axis, normalised.
 			float prop = ( axis_X * posRel.X + axis_Y * posRel.Y ) / len;
 
-			double world = prop * (this.WorldMax - this.WorldMin) + this.WorldMin;
+			float world = prop * (this.WorldMax - this.WorldMin) + this.WorldMin;
 
 			// if want clipped value, return extrema if outside range.
 			if (clip)
@@ -960,7 +960,7 @@ namespace NPlot
                 }
 				
 				// determine angle of axis in degrees
-				//double theta = Math.Atan2(
+				//float theta = Math.Atan2(
 				//	axisPhysicalMax.Y - axisPhysicalMin.Y,
 				//	axisPhysicalMax.X - axisPhysicalMin.X );
 				//theta = theta * 180.0f / Math.PI;
@@ -1025,7 +1025,7 @@ namespace NPlot
 		/// <param name="labelOffset">out: offset from the axies required for axis label</param>
 		public virtual void DrawTick( 
 			Graphics g, 
-			double w,
+			float w,
 			float size,
 			string text,
 			Point textOffset,
@@ -1141,7 +1141,7 @@ namespace NPlot
  					float actualAngle;
 					if (flipTicksLabel_) 
 					{
- 						double radAngle = (Math.PI / 180) * this.TicksLabelAngle;
+ 						float radAngle = (float)(Math.PI / 180) * this.TicksLabelAngle;
  						rotatePoint.X += textSize.Width * (float)Math.Cos(radAngle);
  						rotatePoint.Y += textSize.Width * (float)Math.Sin(radAngle);
  						actualAngle = this.TicksLabelAngle + 180;
@@ -1294,8 +1294,8 @@ namespace NPlot
 		{
 			// determining largest label offset and use it.
 			Point lo = (Point)labelOffset;
-			double norm1 = Math.Sqrt( lo.X*lo.X + lo.Y*lo.Y );
-			double norm2 = Math.Sqrt( mergeLabelOffset.X*mergeLabelOffset.X + mergeLabelOffset.Y*mergeLabelOffset.Y );
+			float norm1 = (float)Math.Sqrt( lo.X*lo.X + lo.Y*lo.Y );
+            float norm2 = (float)Math.Sqrt(mergeLabelOffset.X * mergeLabelOffset.X + mergeLabelOffset.Y * mergeLabelOffset.Y);
 			if (norm1 < norm2)
 			{
 				labelOffset = mergeLabelOffset;
@@ -1341,7 +1341,7 @@ namespace NPlot
 		/// <summary>
 		/// World extent of the axis.
 		/// </summary>
-		public double WorldLength
+		public float WorldLength
 		{
 			get
 			{
@@ -1424,11 +1424,11 @@ namespace NPlot
 		/// </summary>
 		/// <param name="percent">Percentage to increase world length by.</param>
 		/// <remarks>Works for the case WorldMax is less than WorldMin.</remarks>
-		public void IncreaseRange( double percent )
+		public void IncreaseRange( float percent )
 		{
-			double range = WorldMax - WorldMin;
+			float range = WorldMax - WorldMin;
 			
-			if ( !Utils.DoubleEqual( range, 0.0 ) )
+			if ( !Utils.DoubleEqual( range, 0.0f ) )
 			{
 				range *= percent;
 			}
@@ -1436,7 +1436,7 @@ namespace NPlot
 			{
 				// arbitrary number. 
 				// TODO make this configurable.
-				range = 0.01;
+				range = 0.01f;
 			}
 
 			WorldMax += range;
@@ -1604,13 +1604,13 @@ namespace NPlot
 
         public class WorldValueChangedArgs
         {
-            public WorldValueChangedArgs( double value, MinMaxType minOrMax )
+            public WorldValueChangedArgs( float value, MinMaxType minOrMax )
             {
                 Value = value;
                 MinOrMax = minOrMax;
             }
 
-            public double Value;
+            public float Value;
 
             public enum MinMaxType
             {

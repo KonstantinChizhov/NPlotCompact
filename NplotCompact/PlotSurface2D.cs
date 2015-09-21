@@ -530,10 +530,10 @@ namespace NPlot
 			drawables_.Add( p );
 			xAxisPositions_.Add( xp );
 			yAxisPositions_.Add( yp );
-            zPositions_.Add((double)zOrder);
+            zPositions_.Add((float)zOrder);
             // fraction is to make key unique. With 10 million plots at same z, this buggers up.. 
-            double fraction = (double)(++uniqueCounter_)/10000000.0f; 
-            ordering_.Add( (double)zOrder + fraction, drawables_.Count - 1 );
+            float fraction = (float)(++uniqueCounter_)/10000000.0f; 
+            ordering_.Add( (float)zOrder + fraction, drawables_.Count - 1 );
             
             // if p is just an IDrawable, then it can't affect the axes.
 			if ( p is IPlot )
@@ -1026,7 +1026,7 @@ namespace NPlot
 			{
 	
                 int i = (int)ordering_.GetByIndex(i_o);
-				double zOrder = (double)ordering_.GetKey( i_o );
+				float zOrder = (float)ordering_.GetKey( i_o );
 				if (zOrder > this.legendZOrder_)
 				{
 					// draw legend.
@@ -1212,9 +1212,9 @@ namespace NPlot
 			ordering_ = new SortedList();
 			for (int i = 0; i < zPositions_.Count; ++i) 
 			{
-				double zpos = Convert.ToDouble(zPositions_[i]);
-				double fraction = (double)(++uniqueCounter_) / 10000000.0f;
-				double d = zpos + fraction;
+                float zpos = Convert.ToSingle(zPositions_[i]);
+				float fraction = (float)(++uniqueCounter_) / 10000000.0f;
+				float d = zpos + fraction;
 				ordering_.Add(d, i);
 			}
 		}

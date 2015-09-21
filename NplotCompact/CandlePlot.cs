@@ -52,7 +52,7 @@ namespace NPlot
 		/// <param name="low">The low value over the time period</param>
 		/// <param name="high">The high value over the time period.</param>
 		/// <param name="close">The value at close of time period.</param>
-		public PointOLHC( double x, double open, double low, double high, double close )
+		public PointOLHC( float x, float open, float low, float high, float close )
 		{
 			this.x_ = x;
 			this.open_ = open;
@@ -65,7 +65,7 @@ namespace NPlot
 		/// <summary>
 		/// value representing the time period that the financial values apply to.
 		/// </summary>
-		public double X
+		public float X
 		{
 			get
 			{
@@ -76,13 +76,13 @@ namespace NPlot
 				this.x_ = value;
 			}
 		}
-		private double x_;
+		private float x_;
 
 
 		/// <summary>
 		/// The value at open of time period.
 		/// </summary>
-		public double Open
+		public float Open
 		{
 			get
 			{
@@ -93,13 +93,13 @@ namespace NPlot
 				open_ = value;
 			}
 		}
-		private double open_;
+		private float open_;
 
 
 		/// <summary>
 		/// The value at close of time period.
 		/// </summary>
-		public double Close
+		public float Close
 		{
 			get
 			{
@@ -110,13 +110,13 @@ namespace NPlot
 				close_ = value;
 			}
 		}
-		private double close_;
+		private float close_;
 
 
 		/// <summary>
 		/// Low value of the time period.
 		/// </summary>
-		public double Low
+		public float Low
 		{
 			get
 			{
@@ -127,13 +127,13 @@ namespace NPlot
 				low_ = value;
 			}
 		}
-		private double low_;
+		private float low_;
 
 
 		/// <summary>
 		/// High value of the time period.
 		/// </summary>
-		public double High
+		public float High
 		{
 			get
 			{
@@ -144,7 +144,7 @@ namespace NPlot
 				high_ = value;
 			}
 		}
-		private double high_;
+		private float high_;
 
 	}
 
@@ -203,12 +203,12 @@ namespace NPlot
 			private string dataMember_;
 			DataRowCollection rows_ = null;
 
-			// speed optimizations if data is double.
-			private double[] openDataArray_;
-			private double[] lowDataArray_;
-			private double[] highDataArray_;
-			private double[] closeDataArray_;
-			private double[] abscissaDataArray_;
+			// speed optimizations if data is float.
+			private float[] openDataArray_;
+			private float[] lowDataArray_;
+			private float[] highDataArray_;
+			private float[] closeDataArray_;
+			private float[] abscissaDataArray_;
 			private bool useDoublesArrays_;
             
 
@@ -260,11 +260,11 @@ namespace NPlot
 					}
 				}
 
-				openDataArray_ = openData_ as System.Double[];
-				lowDataArray_ = lowData_ as System.Double[];
-				highDataArray_ = highData_ as System.Double[];
-				closeDataArray_ = closeData_ as System.Double[];
-				abscissaDataArray_ = abscissaData_ as System.Double[];
+				openDataArray_ = openData_ as System.Single[];
+				lowDataArray_ = lowData_ as System.Single[];
+				highDataArray_ = highData_ as System.Single[];
+				closeDataArray_ = closeData_ as System.Single[];
+				abscissaDataArray_ = abscissaData_ as System.Single[];
 				useDoublesArrays_ = (
 					openDataArray_ != null &&
 					lowDataArray_ != null &&
@@ -300,11 +300,11 @@ namespace NPlot
                     // is the data coming from a data source?
                     else if (rows_ != null)
                     {
-                        double x = Utils.ToDouble(((DataRow)(rows_[i]))[(string)abscissaData_]);
-                        double open = Utils.ToDouble(((DataRow)(rows_[i]))[(string)openData_]);
-                        double low = Utils.ToDouble(((DataRow)(rows_[i]))[(string)lowData_]);
-                        double high = Utils.ToDouble(((DataRow)(rows_[i]))[(string)highData_]);
-                        double close = Utils.ToDouble(((DataRow)(rows_[i]))[(string)closeData_]);
+                        float x = Utils.ToSingle(((DataRow)(rows_[i]))[(string)abscissaData_]);
+                        float open = Utils.ToSingle(((DataRow)(rows_[i]))[(string)openData_]);
+                        float low = Utils.ToSingle(((DataRow)(rows_[i]))[(string)lowData_]);
+                        float high = Utils.ToSingle(((DataRow)(rows_[i]))[(string)highData_]);
+                        float close = Utils.ToSingle(((DataRow)(rows_[i]))[(string)closeData_]);
 
                         return new PointOLHC(x, open, low, high, close);
                     }
@@ -312,11 +312,11 @@ namespace NPlot
 					// the data is coming from individual arrays.
                     else if (abscissaData_ is Array && openData_ is Array && lowData_ is Array && highData_ is Array && closeData_ is Array)
                     {
-                        double x = Utils.ToDouble(((Array)abscissaData_).GetValue(i));
-                        double open = Utils.ToDouble(((Array)openData_).GetValue(i));
-                        double low = Utils.ToDouble(((Array)lowData_).GetValue(i));
-                        double high = Utils.ToDouble(((Array)highData_).GetValue(i));
-                        double close = Utils.ToDouble(((Array)closeData_).GetValue(i));
+                        float x = Utils.ToSingle(((Array)abscissaData_).GetValue(i));
+                        float open = Utils.ToSingle(((Array)openData_).GetValue(i));
+                        float low = Utils.ToSingle(((Array)lowData_).GetValue(i));
+                        float high = Utils.ToSingle(((Array)highData_).GetValue(i));
+                        float close = Utils.ToSingle(((Array)closeData_).GetValue(i));
 
                         return new PointOLHC(x, open, low, high, close);
                     }
@@ -378,9 +378,9 @@ namespace NPlot
 			/// <returns>A suitable x-axis.</returns>
 			public Axis SuggestXAxis()
 			{
-				double min;
-				double max;
-				double minStep = 0.0;
+				float min;
+				float max;
+				float minStep = 0.0f;
 
                 if (this.rows_ == null)
                 {
@@ -388,24 +388,24 @@ namespace NPlot
 
                     if (((System.Collections.IList)abscissaData_).Count > 1)
                     {
-                        double first = Utils.ToDouble(((Array)abscissaData_).GetValue(0));
-                        double second = Utils.ToDouble(((Array)abscissaData_).GetValue(1));
+                        float first = Utils.ToSingle(((Array)abscissaData_).GetValue(0));
+                        float second = Utils.ToSingle(((Array)abscissaData_).GetValue(1));
                         minStep = Math.Abs(second - first);
                     }
                     if (((System.Collections.IList)abscissaData_).Count > 2)
                     {
-                        double first = Utils.ToDouble(((Array)abscissaData_).GetValue(1));
-                        double second = Utils.ToDouble(((Array)abscissaData_).GetValue(2));
+                        float first = Utils.ToSingle(((Array)abscissaData_).GetValue(1));
+                        float second = Utils.ToSingle(((Array)abscissaData_).GetValue(2));
                         if (Math.Abs(second - first) < minStep)
                             minStep = Math.Abs(second - first);
                     }
                     if (((System.Collections.IList)abscissaData_)[0] is DateTime)
                     {
-                        return new DateTimeAxis(min - minStep / 2.0, max + minStep / 2.0);
+                        return new DateTimeAxis(min - minStep / 2.0f, max + minStep / 2.0f);
                     }
                     else
                     {
-                        return new LinearAxis(min - minStep / 2.0, max + minStep / 2.0);
+                        return new LinearAxis(min - minStep / 2.0f, max + minStep / 2.0f);
                     }
                 }
                 else
@@ -415,25 +415,25 @@ namespace NPlot
 
                     if (rows_.Count > 1)
                     {
-                        double first = Utils.ToDouble(rows_[0][(string)abscissaData_]);
-                        double second = Utils.ToDouble(rows_[1][(string)abscissaData_]);
+                        float first = Utils.ToSingle(rows_[0][(string)abscissaData_]);
+                        float second = Utils.ToSingle(rows_[1][(string)abscissaData_]);
                         minStep = Math.Abs(second - first);
                     }
                     if (rows_.Count > 2)
                     {
-                        double first = Utils.ToDouble(rows_[1][(string)abscissaData_]);
-                        double second = Utils.ToDouble(rows_[2][(string)abscissaData_]);
+                        float first = Utils.ToSingle(rows_[1][(string)abscissaData_]);
+                        float second = Utils.ToSingle(rows_[2][(string)abscissaData_]);
                         if (Math.Abs(second - first) < minStep)
                             minStep = Math.Abs(second - first);
                     }
 
                     if ((rows_[0])[(string)abscissaData_] is DateTime)
                     {
-                        return new DateTimeAxis(min - minStep / 2.0, max + minStep / 2.0);
+                        return new DateTimeAxis(min - minStep / 2.0f, max + minStep / 2.0f);
                     }
                     else
                     {
-                        return new LinearAxis(min - minStep / 2.0, max + minStep / 2.0);
+                        return new LinearAxis(min - minStep / 2.0f, max + minStep / 2.0f);
                     }
                 }
 
@@ -447,10 +447,10 @@ namespace NPlot
 			public Axis SuggestYAxis()
 			{
 
-				double min_l;
-				double max_l;
-				double min_h;
-				double max_h;
+				float min_l;
+				float max_l;
+				float min_h;
+				float max_h;
 
                 if (this.rows_ == null)
                 {
@@ -464,7 +464,7 @@ namespace NPlot
                 }
 
                 Axis a = new LinearAxis( min_l, max_h );
-				a.IncreaseRange( 0.08 );
+				a.IncreaseRange( 0.08f );
 				return a;
 			}
 
@@ -562,7 +562,7 @@ namespace NPlot
 			{
 
 				PointOLHC point = (PointOLHC)cd[i];
-				if ( (!double.IsNaN (point.Open)) && (!double.IsNaN(point.High)) && (!double.IsNaN (point.Low)) && (!double.IsNaN(point.Close)) )
+				if ( (!float.IsNaN (point.Open)) && (!float.IsNaN(point.High)) && (!float.IsNaN (point.Low)) && (!float.IsNaN(point.Close)) )
 				{
 
 					int xPos = (int)(xAxis.WorldToPhysical( point.X, false )).X;

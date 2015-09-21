@@ -109,7 +109,7 @@ namespace NPlot
 		/// </summary>
 		/// <param name="worldMin">Minimum world value</param>
 		/// <param name="worldMax">Maximum world value</param>
-		public PiAxis( double worldMin, double worldMax )
+		public PiAxis( float worldMin, float worldMax )
 			: base( worldMin, worldMax )
 		{
 			Init();
@@ -156,7 +156,7 @@ namespace NPlot
 				else if (i == 1)
 					label = "Pi";
 
-				this.DrawTick( g, i*Math.PI, this.LargeTickSize, 
+				this.DrawTick( g, (float)(i*Math.PI), this.LargeTickSize, 
 					label,
 					new Point(0,0), 
 					physicalMin, physicalMax,

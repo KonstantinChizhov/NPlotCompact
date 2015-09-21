@@ -66,8 +66,8 @@ namespace NPlot
 				{
 
                     this.YAxisSuggester_ = new AdapterUtils.AxisSuggester_IList((IList)ordinateData);
-                    if (ordinateData is Double[])
-                        this.yDataGetter_ = new AdapterUtils.DataGetter_DoublesArray((Double[])ordinateData);
+                    if (ordinateData is Single[])
+                        this.yDataGetter_ = new AdapterUtils.DataGetter_DoublesArray((Single[])ordinateData);
                     else
                         this.yDataGetter_ = new AdapterUtils.DataGetter_IList((IList)ordinateData);
 
@@ -76,8 +76,8 @@ namespace NPlot
                     if (abscissaData is IList)
 					{
                         this.XAxisSuggester_ = new AdapterUtils.AxisSuggester_IList((IList)abscissaData);
-                        if (abscissaData is Double[])
-                            this.xDataGetter_ = new AdapterUtils.DataGetter_DoublesArray((Double[])abscissaData);
+                        if (abscissaData is Single[])
+                            this.xDataGetter_ = new AdapterUtils.DataGetter_DoublesArray((Single[])abscissaData);
                         else
                             this.xDataGetter_ = new AdapterUtils.DataGetter_IList((IList)abscissaData);
 
@@ -116,8 +116,8 @@ namespace NPlot
                         this.XAxisSuggester_ = new AdapterUtils.AxisSuggester_IList((IList)abscissaData);
                         this.YAxisSuggester_ = new AdapterUtils.AxisSuggester_Auto((IList)abscissaData);
                         this.counter_ = new AdapterUtils.Counter_IList((IList)abscissaData);
-                        if (abscissaData is Double[])
-                            this.xDataGetter_ = new AdapterUtils.DataGetter_DoublesArray((Double[])abscissaData);
+                        if (abscissaData is Single[])
+                            this.xDataGetter_ = new AdapterUtils.DataGetter_DoublesArray((Single[])abscissaData);
                         else
                             this.xDataGetter_ = new AdapterUtils.DataGetter_IList((IList)abscissaData);
 
@@ -273,10 +273,10 @@ namespace NPlot
             // The world length should never be returned as 0
             // This would result in an axis with a span of 0 units
             // which can not be properly displayed.
-            if (a.WorldLength == 0.0)
+            if (a.WorldLength == 0.0f)
             {
                 // TODO make 0.08 a parameter.
-                a.IncreaseRange(0.08);
+                a.IncreaseRange(0.08f);
             }
             return a;
 		}
@@ -290,7 +290,7 @@ namespace NPlot
 		{
 			Axis a = this.YAxisSuggester_.Get();
 			// TODO make 0.08 a parameter.
-			a.IncreaseRange( 0.08 );
+			a.IncreaseRange( 0.08f );
 			return a;
 		}
 

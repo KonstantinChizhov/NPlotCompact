@@ -41,17 +41,17 @@ namespace NPlot
 	/// </summary>
 	public class ImagePlot : IPlot
 	{
-		private double[,] data_;
-		private double xStart_ = 0.0;
-		private double xStep_ = 1.0;
-		private double yStart_ = 0.0;
-		private double yStep_ = 1.0;
+		private float[,] data_;
+		private float xStart_ = 0.0f;
+		private float xStep_ = 1.0f;
+		private float yStart_ = 0.0f;
+		private float yStep_ = 1.0f;
 		
 
 		/// <summary>
 		/// At or below which value a minimum gradient color should be used.
 		/// </summary>
-		public double DataMin      
+		public float DataMin      
 		{
 			get          
 			{
@@ -62,13 +62,13 @@ namespace NPlot
 				dataMin_ = value;
 			}
 		}
-		private double dataMin_;
+		private float dataMin_;
 
 
 		/// <summary>
 		/// At or above which value a maximum gradient color should be used.
 		/// </summary>
-		public double DataMax
+		public float DataMax
 		{
 			get
 			{
@@ -79,7 +79,7 @@ namespace NPlot
 				dataMax_ = value;
 			}
 		}
-		private double dataMax_;
+		private float dataMax_;
 
 
 		/// <summary>
@@ -116,7 +116,7 @@ namespace NPlot
 		/// <param name="yStep">the world step size between pixels in the y-direction.</param>
 		/// <remarks>no adapters for this yet - when we get some more 2d
 		/// plotting functionality, then perhaps create some.</remarks>
-		public ImagePlot( double[,] data, double xStart, double xStep, double yStart, double yStep )
+		public ImagePlot( float[,] data, float xStart, float xStep, float yStart, float yStep )
 		{
 
 #if CHECK_ERRORS
@@ -139,7 +139,7 @@ namespace NPlot
 		/// Constructor
 		/// </summary>
 		/// <param name="data">The 2D array to plot.</param>
-		public ImagePlot( double[,] data )
+		public ImagePlot( float[,] data )
 		{
 			this.data_ = data;
 			this.calculateMinMax();
@@ -160,24 +160,24 @@ namespace NPlot
 				return;
 			}
 
-			double worldWidth = xAxis.Axis.WorldMax - xAxis.Axis.WorldMin;
-			double numBlocksHorizontal = worldWidth / this.xStep_;
-			double worldHeight = yAxis.Axis.WorldMax - yAxis.Axis.WorldMin;
-			double numBlocksVertical = worldHeight / this.yStep_;
+			float worldWidth = xAxis.Axis.WorldMax - xAxis.Axis.WorldMin;
+			float numBlocksHorizontal = worldWidth / this.xStep_;
+			float worldHeight = yAxis.Axis.WorldMax - yAxis.Axis.WorldMin;
+			float numBlocksVertical = worldHeight / this.yStep_;
 
-			double physicalWidth = xAxis.PhysicalMax.X - xAxis.PhysicalMin.X;
-			double blockWidth = physicalWidth / numBlocksHorizontal;
+			float physicalWidth = xAxis.PhysicalMax.X - xAxis.PhysicalMin.X;
+			float blockWidth = physicalWidth / numBlocksHorizontal;
 			bool wPositive = true;
-			if (blockWidth < 0.0)
+			if (blockWidth < 0.0f)
 			{
 				wPositive = false;
 			}
 			blockWidth = Math.Abs(blockWidth)+1;
 
-			double physicalHeight = yAxis.PhysicalMax.Y - yAxis.PhysicalMin.Y;
-			double blockHeight = physicalHeight / numBlocksVertical;
+			float physicalHeight = yAxis.PhysicalMax.Y - yAxis.PhysicalMin.Y;
+			float blockHeight = physicalHeight / numBlocksVertical;
 			bool hPositive = true;
-			if (blockHeight < 0.0)
+			if (blockHeight < 0.0f)
 			{
 				hPositive = false;
 			}
@@ -187,8 +187,8 @@ namespace NPlot
 			{
 				for (int j=0; j<data_.GetLength(1); ++j)
 				{
-					double wX = (double)j*this.xStep_ + xStart_;
-					double wY = (double)i*this.yStep_ + yStart_;
+					float wX = (float)j*this.xStep_ + xStart_;
+					float wY = (float)i*this.yStep_ + yStart_;
 					if ( !hPositive )
 					{
 						wY += yStep_;
@@ -200,8 +200,8 @@ namespace NPlot
 
 					if (this.center_)
 					{
-						wX -= this.xStep_/2.0;
-						wY -= this.yStep_/2.0;
+						wX -= this.xStep_/2.0f;
+						wY -= this.yStep_/2.0f;
 					}
 					Pen p = new Pen( this.Gradient.GetColor( (data_[i,j]-this.dataMin_)/(this.dataMax_-this.dataMin_) ) );
 					int x = (int)xAxis.WorldToPhysical(wX,false).X;
@@ -276,7 +276,7 @@ namespace NPlot
 		{
 			if (this.center_)
 			{
-				return new LinearAxis( this.xStart_ - this.xStep_/2.0, this.xStart_ + this.xStep_ * data_.GetLength(1) - this.xStep_/2.0 );
+				return new LinearAxis( this.xStart_ - this.xStep_/2.0f, this.xStart_ + this.xStep_ * data_.GetLength(1) - this.xStep_/2.0f );
 			}
 			
 			return new LinearAxis( this.xStart_, this.xStart_ + this.xStep_ * data_.GetLength(1) );
@@ -291,7 +291,7 @@ namespace NPlot
 		{
 			if (this.center_)
 			{
-				return new LinearAxis( this.yStart_ - this.yStep_/2.0, this.yStart_ + this.yStep_ * data_.GetLength(0) - this.yStep_/2.0 );
+				return new LinearAxis( this.yStart_ - this.yStep_/2.0f, this.yStart_ + this.yStep_ * data_.GetLength(0) - this.yStep_/2.0f );
 			}
 			
 			return new LinearAxis( this.yStart_, this.yStart_ + this.yStep_ * data_.GetLength(0) );

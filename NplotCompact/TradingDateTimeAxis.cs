@@ -50,7 +50,7 @@ namespace NPlot
 		/// <summary>
 		/// The axis world min value.
 		/// </summary>
-		public override double WorldMin
+		public override float WorldMin
 		{
 			get 
 			{ 
@@ -62,13 +62,13 @@ namespace NPlot
 				virtualWorldMin_ = SparseWorldRemap(value);
 			}
 		}
-		private double virtualWorldMin_ = double.NaN;
+		private float virtualWorldMin_ = float.NaN;
 
 
 		/// <summary>
 		/// The axis world max value.
 		/// </summary>
-		public override double WorldMax
+		public override float WorldMax
 		{
 			get 
 			{ 
@@ -80,7 +80,7 @@ namespace NPlot
 				virtualWorldMax_ = SparseWorldRemap(value);
 			}
 		}
-		private double virtualWorldMax_ = double.NaN;
+		private float virtualWorldMax_ = float.NaN;
 
 
 		/// <summary>
@@ -218,7 +218,7 @@ namespace NPlot
 		/// <remarks>Not sure how much time is spent in this often called function. If it's lots, then
 		/// worth optimizing (there is scope to do so).</remarks>
 		public override PointF WorldToPhysical(
-			double coord,
+			float coord,
 			PointF physicalMin,
 			PointF physicalMax,
 			bool clip)
@@ -274,16 +274,16 @@ namespace NPlot
 			// (3) we are inside range or don't want to clip.
 
 			coord = SparseWorldRemap(coord);
-			double range = virtualWorldMax_ - virtualWorldMin_;
-			double prop = (double)((coord - virtualWorldMin_) / range);
-			//double range = WorldMax - WorldMin;
-			//double prop = (double)((coord - WorldMin) / range);
+			float range = virtualWorldMax_ - virtualWorldMin_;
+			float prop = (float)((coord - virtualWorldMin_) / range);
+			//float range = WorldMax - WorldMin;
+			//float prop = (float)((coord - WorldMin) / range);
 			//if (range1 != range)
 			//    range1 = range;
 
 			// Force clipping at bounding box largeClip times that of real bounding box
 			// anyway. This is effectively at infinity.
-			const double largeClip = 100.0;
+			const float largeClip = 100.0f;
 			if (prop > largeClip && clip)
 				prop = largeClip;
 
@@ -317,7 +317,7 @@ namespace NPlot
 		/// <param name="physicalMax">the physical maximum extremity of the axis</param>
 		/// <param name="clip">whether or not to clip the world value to lie in the range of the axis if it is outside.</param>
 		/// <returns></returns>
-		public override double PhysicalToWorld(
+		public override float PhysicalToWorld(
 			PointF p,
 			PointF physicalMin,
 			PointF physicalMax,
@@ -353,8 +353,8 @@ namespace NPlot
 			// dist of point projection on axis, normalised.
 			float prop = (axis_X * posRel.X + axis_Y * posRel.Y) / len;
 
-			//double world = prop * (WorldMax - WorldMin) + WorldMin;
-			double world = prop * (virtualWorldMax_ - virtualWorldMin_) + virtualWorldMin_;
+			//float world = prop * (WorldMax - WorldMin) + WorldMin;
+			float world = prop * (virtualWorldMax_ - virtualWorldMin_) + virtualWorldMin_;
 			world = ReverseSparseWorldRemap(world);
 
 			// if want clipped value, return extrema if outside range.
@@ -373,14 +373,14 @@ namespace NPlot
 		/// </summary>
 		/// <remarks>
 		/// This code works under asumption that there are exactly 24*60*60 seconds in a day
-		/// This is strictly speaking not correct but apparently .NET 2.0 does not count leap seconds.
+		/// This is strictly speaking not correct but apparently .NET 2.0f does not count leap seconds.
 		/// Luckilly, Ticks == 0  =~= 0001-01-01T00:00 =~= Monday
 		/// First tried a version fully on floating point arithmetic,
 		/// but failed hopelessly due to rounding errors.
 		/// </remarks>
 		/// <param name="coord">world coordinate to transform.</param>
 		/// <returns>equivalent virtual world coordinate.</returns>
-		protected double SparseWorldRemap(double coord)
+		protected float SparseWorldRemap(float coord)
 		{
 			long ticks = (long)coord;
 			long whole_days = ticks / TimeSpan.TicksPerDay;
@@ -399,7 +399,7 @@ namespace NPlot
 			long whole_working_days = (full_weeks * 5 + days_in_last_week);
 			long working_ticks = whole_working_days * tradingTimeSpan_;
 			long new_ticks = working_ticks + ticks_in_last_day;
-			return (double)new_ticks;
+			return (float)new_ticks;
 		}
 
 
@@ -408,7 +408,7 @@ namespace NPlot
 		/// </summary>
 		/// <param name="coord">virtual world coordinate to transform.</param>
 		/// <returns>equivalent world coordinate.</returns>
-		protected double ReverseSparseWorldRemap(double coord)
+		protected float ReverseSparseWorldRemap(float coord)
 		{
 			long ticks = (long)coord;
 			//ticks += startTradingTime_;
@@ -418,7 +418,7 @@ namespace NPlot
 			long week_part = ticks % 5;
 
 			long day_ticks = (full_weeks * 7 + week_part) * TimeSpan.TicksPerDay;
-			return (double)(day_ticks + ticks_in_last_day + startTradingTime_);
+			return (float)(day_ticks + ticks_in_last_day + startTradingTime_);
 		}
 
 
@@ -430,7 +430,7 @@ namespace NPlot
 		/// <param name="coord">world coordinate to shift.</param>
 		/// <param name="delta">shif amount in "virtual" units.</param>
 		/// <returns></returns>
-		public double SparseWorldAdd(double coord, double delta)
+		public float SparseWorldAdd(float coord, float delta)
 		{
 			return ReverseSparseWorldRemap(SparseWorldRemap(coord) + delta);
 		}
@@ -439,7 +439,7 @@ namespace NPlot
 		/// <summary>
 		/// World extent in virtual (sparse) units.
 		/// </summary>
-		public double SparseWorldLength
+		public float SparseWorldLength
 		{
 			get
 			{
@@ -453,7 +453,7 @@ namespace NPlot
 		/// </summary>
 		/// <param name="coord">world coordinate in ticks to check.</param>
 		/// <returns>true if in trading hours, false if in non-trading gap.</returns>
-		public bool WithinTradingHours(double coord)
+		public bool WithinTradingHours(float coord)
 		{
 			long ticks = (long)coord;
 			long whole_days = ticks / TimeSpan.TicksPerDay;
@@ -474,7 +474,7 @@ namespace NPlot
 		/// </summary>
 		/// <param name="coord">world coordinate in ticks to check.</param>
 		/// <returns>true if on Mon - Fri.</returns>
-		public bool OnTradingDays(double coord)
+		public bool OnTradingDays(float coord)
 		{
 			long ticks = (long)coord;
 			long whole_days = ticks / TimeSpan.TicksPerDay;
@@ -503,7 +503,7 @@ namespace NPlot
 			out ArrayList smallTickPositions
 			)
 		{
-			if (LargeTickStep != TimeSpan.Zero || SparseWorldLength > 2.0 * (double)tradingTimeSpan_) // utilise base class
+			if (LargeTickStep != TimeSpan.Zero || SparseWorldLength > 2.0f * (float)tradingTimeSpan_) // utilise base class
 			{
 				ArrayList largeTickPositions_FirstPass;
 				base.WorldTickPositions_FirstPass(physicalMin, physicalMax, out largeTickPositions_FirstPass, out smallTickPositions);
@@ -513,7 +513,7 @@ namespace NPlot
 					// leave it alone, whatever that single tick may be (better something than nothing...)
 					largeTickPositions = largeTickPositions_FirstPass;
 				}
-				else if ((double)largeTickPositions_FirstPass[1] - (double)largeTickPositions_FirstPass[0] > 27.0 * (double)TimeSpan.TicksPerDay)
+				else if ((float)largeTickPositions_FirstPass[1] - (float)largeTickPositions_FirstPass[0] > 27.0f * (float)TimeSpan.TicksPerDay)
 				{
 					// For distances between ticks in months or longer, just accept all ticks
 					largeTickPositions = largeTickPositions_FirstPass;
@@ -524,7 +524,7 @@ namespace NPlot
 					largeTickPositions = new ArrayList();
 					foreach (object tick in largeTickPositions_FirstPass)
 					{
-						if (OnTradingDays((double)tick))
+						if (OnTradingDays((float)tick))
 							largeTickPositions.Add(tick);
 					}
 				}
@@ -641,7 +641,7 @@ namespace NPlot
 
 				while (currentTickDate < worldMaxDate)
 				{
-					double world = (double)currentTickDate.Ticks;
+					float world = (float)currentTickDate.Ticks;
 
 					if (!WithinTradingHours(world))
 					{

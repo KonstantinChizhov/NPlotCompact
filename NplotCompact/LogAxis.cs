@@ -99,7 +99,7 @@ namespace NPlot
 		/// </summary>
 		/// <param name="worldMin">Minimum World value for the axis.</param>
 		/// <param name="worldMax">Maximum World value for the axis.</param>
-		public LogAxis(double worldMin, double worldMax)
+		public LogAxis(float worldMin, float worldMax)
 			: base( worldMin, worldMax )
 		{
 			Init();
@@ -149,8 +149,8 @@ namespace NPlot
 				{
 					StringBuilder label = new StringBuilder();
 					// do google search for "format specifier writeline" for help on this.
-					label.AppendFormat(this.NumberFormat, (double)largeTickPositions[i]);
-					this.DrawTick( g, (double)largeTickPositions[i], this.LargeTickSize, label.ToString(),
+					label.AppendFormat(this.NumberFormat, (float)largeTickPositions[i]);
+					this.DrawTick( g, (float)largeTickPositions[i], this.LargeTickSize, label.ToString(),
 						new Point(0,0), physicalMin, physicalMax, out tLabelOffset, out tBoundingBox );
 
 					Axis.UpdateOffsetAndBounds( ref labelOffset, ref boundingBox, tLabelOffset, tBoundingBox );
@@ -173,7 +173,7 @@ namespace NPlot
 			{
 				for (int i=0; i<smallTickPositions.Count; ++i)
 				{
-					this.DrawTick( g, (double)smallTickPositions[i], this.SmallTickSize,
+					this.DrawTick( g, (float)smallTickPositions[i], this.SmallTickSize,
 						"", new Point(0,0), physicalMin, physicalMax, out tLabelOffset, out tBoundingBox );
 					// ignore r for now - assume bb unchanged by small tick bounds.
 				}
@@ -205,7 +205,7 @@ namespace NPlot
 			smallTickPositions = new ArrayList();
 
 			// retrieve the spacing of the big ticks. Remember this is decades!
-			double bigTickSpacing = this.DetermineTickSpacing();
+			float bigTickSpacing = this.DetermineTickSpacing();
 			int nSmall = this.DetermineNumberSmallTicks( bigTickSpacing );
 
 			// now we have to set the ticks
@@ -217,7 +217,7 @@ namespace NPlot
 				{
 					// deal with the smallticks preceding the
 					// first big tick
-					double pos1 = (double)largeTickPositions[0];
+					float pos1 = (float)largeTickPositions[0];
 					while (pos1 > this.WorldMin)
 					{
 						pos1 = pos1 / 10.0f;
@@ -226,7 +226,7 @@ namespace NPlot
 					// now go on for all other Major ticks
 					for (int i=0; i<largeTickPositions.Count; ++i )
 					{
-						double pos = (double)largeTickPositions[i];
+						float pos = (float)largeTickPositions[i];
 						for (int j=1; j<=nSmall; ++j )
 						{
 							pos=pos*10.0F;
@@ -242,16 +242,16 @@ namespace NPlot
 			else
 			{
 				// guess what...
-				double [] m = { 2.0f, 3.0f, 4.0f, 5.0f, 6.0f, 7.0f, 8.0f, 9.0f };
+				float [] m = { 2.0f, 3.0f, 4.0f, 5.0f, 6.0f, 7.0f, 8.0f, 9.0f };
 				// Then we deal with the other ticks
 				if (largeTickPositions.Count > 0)
 				{
 					// first deal with the smallticks preceding the first big tick
 					// positioning before the first tick
-					double pos1=(double)largeTickPositions[0]/10.0f;
+					float pos1=(float)largeTickPositions[0]/10.0f;
 					for (int i=0; i<m.Length; i++)
 					{
-						double pos=pos1*m[i];
+						float pos=pos1*m[i];
 						if (pos>this.WorldMin)
 						{
 							smallTickPositions.Add(pos);
@@ -260,10 +260,10 @@ namespace NPlot
 					// now go on for all other Major ticks
 					for (int i=0; i<largeTickPositions.Count; ++i )
 					{
-						pos1=(double)largeTickPositions[i];
+						pos1=(float)largeTickPositions[i];
 						for (int j=0; j<m.Length; ++j )
 						{
-							double pos=pos1*m[j];
+							float pos=pos1*m[j];
 							// check to see if we are still in the range
 							if (pos < WorldMax)
 							{
@@ -276,11 +276,11 @@ namespace NPlot
 				{
 					// probably a minor tick would anyway fall in the range
 					// find the decade preceding the minimum
-					double dec=Math.Floor(Math.Log10(WorldMin));
-					double pos1=Math.Pow(10.0,dec);
+					float dec=(float)Math.Floor(Math.Log10(WorldMin));
+					float pos1=(float)Math.Pow(10.0f,dec);
 					for (int i=0; i<m.Length; i++)
 					{
-						double pos=pos1*m[i];
+						float pos=pos1*m[i];
 						if (pos>this.WorldMin && pos< this.WorldMax )
 						{
 							smallTickPositions.Add(pos);
@@ -291,22 +291,22 @@ namespace NPlot
 
 		}
 
-		private static double m_d5Log = -Math.Log10(0.5);   // .30103
-		private static double m_d5RegionPos = Math.Abs(m_d5Log + ((1 - m_d5Log) / 2)); //	   ' .6505
-		private static double m_d5RegionNeg = Math.Abs(m_d5Log / 2); //	   '.1505
+        private static float m_d5Log = -(float)Math.Log10(0.5);   // .30103
+		private static float m_d5RegionPos = Math.Abs(m_d5Log + ((1 - m_d5Log) / 2)); //	   ' .6505
+		private static float m_d5RegionNeg = Math.Abs(m_d5Log / 2); //	   '.1505
 
-		private void CalcGrids( double dLenAxis, int nNumDivisions, ref double dDivisionInterval)
+		private void CalcGrids( float dLenAxis, int nNumDivisions, ref float dDivisionInterval)
 		{
-			double dMyInterval  = dLenAxis / nNumDivisions;
-			double dPower = Math.Log10(dMyInterval);
+			float dMyInterval  = dLenAxis / nNumDivisions;
+			float dPower = (float)Math.Log10(dMyInterval);
 			dDivisionInterval = 10 ^ (int)dPower;
-			double dFixPower = dPower - (int)dPower;
-			double d5Region = Math.Abs(dPower - dFixPower);
-			double dMyMult;
+			float dFixPower = dPower - (int)dPower;
+			float d5Region = Math.Abs(dPower - dFixPower);
+			float dMyMult;
 			if (dPower < 0)
 			{
 				d5Region = -(dPower - dFixPower);
-				dMyMult = 0.5;
+				dMyMult = 0.5f;
 			}
 			else
 			{
@@ -337,23 +337,23 @@ namespace NPlot
 			smallTickPositions = null;
 			largeTickPositions = new ArrayList();
 
-			if ( double.IsNaN(WorldMin) || double.IsNaN(WorldMax) )
+			if ( float.IsNaN(WorldMin) || float.IsNaN(WorldMax) )
 			{
 				throw new NPlotException( "world extent of axis not set." );
 			}
 
-			double roundTickDist = this.DetermineTickSpacing( );
+			float roundTickDist = this.DetermineTickSpacing( );
 
 			// now determine first tick position.
-			double first = 0.0f;
+			float first = 0.0f;
 
 			// if the user hasn't specified a large tick position.
-			if (double.IsNaN(largeTickValue_))
+			if (float.IsNaN(largeTickValue_))
 			{
-				if( WorldMin > 0.0 )
+				if( WorldMin > 0.0f )
 				{
 
-					double nToFirst = Math.Floor(Math.Log10(WorldMin) / roundTickDist)+1.0f;
+                    float nToFirst = (float)Math.Floor(Math.Log10(WorldMin) / roundTickDist) + 1.0f;
 					first = nToFirst * roundTickDist;
 				}
 
@@ -367,7 +367,7 @@ namespace NPlot
 			// the user has specified one place they would like a large tick placed.
 			else
 			{
-				first = Math.Log10( this.LargeTickValue );
+                first = (float)Math.Log10(this.LargeTickValue);
 
 				// TODO: check here not too much different.
 				// could result in long loop.
@@ -382,13 +382,13 @@ namespace NPlot
 				}
 			}
 
-			double mark = first;
+			float mark = first;
 			while (mark <= Math.Log10(WorldMax))
 			{
 				// up to here only logs are dealt with, but I want to return
 				// a real value in the arraylist
-				double val;
-				val = Math.Pow( 10.0, mark );
+				float val;
+                val = (float)Math.Pow(10.0f, mark);
 				largeTickPositions.Add( val );
 				mark += roundTickDist;
 			}
@@ -400,15 +400,15 @@ namespace NPlot
 		/// Determines the tick spacing.
 		/// </summary>
 		/// <returns>The tick spacing (in decades!)</returns>
-		private double DetermineTickSpacing( )
+		private float DetermineTickSpacing( )
 		{
-			if ( double.IsNaN(WorldMin) || double.IsNaN(WorldMax) )
+			if ( float.IsNaN(WorldMin) || float.IsNaN(WorldMax) )
 			{
 				throw new NPlotException( "world extent of axis is not set." );
 			}
 
 			// if largeTickStep has been set, it is used
-			if ( !double.IsNaN( this.largeTickStep_) )
+			if ( !float.IsNaN( this.largeTickStep_) )
 			{
 				if ( this.largeTickStep_ <= 0.0f )
 				{
@@ -418,15 +418,15 @@ namespace NPlot
 				return this.largeTickStep_;
 			}
 
-			double MagRange = (double)(Math.Floor(Math.Log10(WorldMax)) - Math.Floor(Math.Log10(WorldMin))+1.0);
+			float MagRange = (float)(Math.Floor(Math.Log10(WorldMax)) - Math.Floor(Math.Log10(WorldMin))+1.0f);
 
-			if ( MagRange > 0.0 )
+			if ( MagRange > 0.0f )
 			{
 				// for now, a simple logic
 				// start with a major tick every order of magnitude, and
 				// increment if in order not to have more than 10 ticks in
 				// the plot.
-				double roundTickDist=1.0F;
+				float roundTickDist=1.0F;
 				int nticks=(int)(MagRange/roundTickDist);
 				while (nticks > 10)
 				{
@@ -447,7 +447,7 @@ namespace NPlot
 		/// </summary>
 		/// <param name="bigTickDist">The distance between two large ticks.</param>
 		/// <returns>The number of small ticks.</returns>
-		private int DetermineNumberSmallTicks( double bigTickDist )
+		private int DetermineNumberSmallTicks( float bigTickDist )
 		{
 			// if the big ticks is more than one decade, the
 			// small ticks are every decade, I don't let the user set it.
@@ -478,7 +478,7 @@ namespace NPlot
 		/// <summary>
 		/// The step between large ticks, expressed in decades for the Log scale.
 		/// </summary>
-		public double LargeTickStep
+		public float LargeTickStep
 		{
 			set
 			{
@@ -494,7 +494,7 @@ namespace NPlot
 		/// <summary>
 		/// Position of one of the large ticks [other positions will be calculated relative to this one].
 		/// </summary>
-		public double LargeTickValue
+		public float LargeTickValue
 		{
 			set
 			{
@@ -521,8 +521,8 @@ namespace NPlot
 
 		// Private members
 		private object numberSmallTicks_;
-		private double largeTickValue_ = double.NaN;
-		private double largeTickStep_ = double.NaN;
+		private float largeTickValue_ = float.NaN;
+		private float largeTickStep_ = float.NaN;
 
 		/// <summary>
 		/// World to physical coordinate transform.
@@ -534,7 +534,7 @@ namespace NPlot
 		/// <returns>The transformed coordinates.</returns>
 		/// <remarks>TODO: make Reversed property work for this.</remarks>
 		public override PointF WorldToPhysical( 
-			double coord,
+			float coord,
 			PointF physicalMin, 
 			PointF physicalMax,
 			bool clip )
@@ -558,8 +558,8 @@ namespace NPlot
 			}
 
 			// inside range or don't want to clip.
-			double lrange = (double)(Math.Log10(WorldMax) - Math.Log10(WorldMin));
-			double prop = (double)((Math.Log10(coord) - Math.Log10(WorldMin)) / lrange);
+			float lrange = (float)(Math.Log10(WorldMax) - Math.Log10(WorldMin));
+			float prop = (float)((Math.Log10(coord) - Math.Log10(WorldMin)) / lrange);
 			PointF offset = new PointF( (float)(prop * (physicalMax.X - physicalMin.X)),
 				(float)(prop * (physicalMax.Y - physicalMin.Y)) );
 
@@ -576,15 +576,15 @@ namespace NPlot
 		/// <param name="physicalMax">The physical position corresponding to the world maximum of the axis.</param>
 		/// <param name="clip">If true, the world value will be clipped to WorldMin or WorldMax as appropriate if it lies outside this range.</param>
 		/// <returns>The world value corresponding to the projection of the point p onto the axis.</returns>
-		public override double PhysicalToWorld( PointF p, PointF physicalMin, PointF physicalMax, bool clip )
+		public override float PhysicalToWorld( PointF p, PointF physicalMin, PointF physicalMax, bool clip )
 		{
 			// use the base method to do the projection on the axis.
-			double t = base.PhysicalToWorld( p, physicalMin, physicalMax, clip );
+			float t = base.PhysicalToWorld( p, physicalMin, physicalMax, clip );
 
 			// now reconstruct phys dist prop along this assuming linear scale as base method did.
-			double v = (t - this.WorldMin) / (this.WorldMax - this.WorldMin);
+			float v = (t - this.WorldMin) / (this.WorldMax - this.WorldMin);
 
-			double ret = WorldMin*Math.Pow( WorldMax / WorldMin, v );
+            float ret = WorldMin * (float)Math.Pow(WorldMax / WorldMin, v);
 
 			// if want clipped value, return extrema if outside range.
 			if (clip)
@@ -601,11 +601,11 @@ namespace NPlot
 		/// <summary>
 		/// The minimum world extent of the axis. Must be greater than zero.
 		/// </summary>
-		public override double WorldMin
+		public override float WorldMin
 		{
 			get
 			{
-				return (double)base.WorldMin;
+				return (float)base.WorldMin;
 			}
 			set
 			{
@@ -624,11 +624,11 @@ namespace NPlot
 		/// <summary>
 		/// The maximum world extent of the axis. Must be greater than zero.
 		/// </summary>
-		public override double WorldMax
+		public override float WorldMax
 		{
 			get
 			{
-				return (double)base.WorldMax;
+				return (float)base.WorldMax;
 			}
 			set
 			{

@@ -43,11 +43,11 @@ namespace NPlot
 	{
 
 		/// <summary>
-		/// Gets a color corresponding to a number between 0.0 and 1.0 inclusive.
+		/// Gets a color corresponding to a number between 0.0f and 1.0f inclusive.
 		/// </summary>
-		/// <param name="prop">the number to get corresponding color for (between 0.0 and 1.0)</param>
+		/// <param name="prop">the number to get corresponding color for (between 0.0f and 1.0f)</param>
 		/// <returns>The color corresponding to the supplied number.</returns>
-		Color GetColor( double prop );
+		Color GetColor( float prop );
 
 	}
 }

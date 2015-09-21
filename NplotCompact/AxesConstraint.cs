@@ -52,7 +52,7 @@ namespace NPlot
 		/// </summary>
 		public class XPixelWorldLength : AxesConstraint
 		{
-			private double pWorldLength_ = 0.0f;
+			private float pWorldLength_ = 0.0f;
 			private object holdFixedY_ = null;
 
 			/// <summary>
@@ -61,7 +61,7 @@ namespace NPlot
 			/// constraint.
 			/// </summary>
 			/// <param name="p">The world pixel length</param>
-			public XPixelWorldLength( double p )
+			public XPixelWorldLength( float p )
 			{
 				this.pWorldLength_ = p;
 			}
@@ -75,7 +75,7 @@ namespace NPlot
 			/// <param name="holdFixedY">The position of this y-axis will be 
 			/// held constant. The other y-axis will be moved in order to 
 			/// force the constraint.</param>
-			public XPixelWorldLength( double p, PlotSurface2D.YAxisPosition holdFixedY )
+			public XPixelWorldLength( float p, PlotSurface2D.YAxisPosition holdFixedY )
 			{
 				this.pWorldLength_ = p;
 				this.holdFixedY_ = holdFixedY;
@@ -92,7 +92,7 @@ namespace NPlot
 				PhysicalAxis pXAxis1, PhysicalAxis pYAxis1, 
 				PhysicalAxis pXAxis2, PhysicalAxis pYAxis2 )
 			{
-				int desiredLength = (int)(pXAxis1.Axis.WorldLength / (double)this.pWorldLength_);
+				int desiredLength = (int)(pXAxis1.Axis.WorldLength / (float)this.pWorldLength_);
 				int currentLength = pXAxis1.PhysicalLength;
 				int delta = currentLength - desiredLength;
 
@@ -134,7 +134,7 @@ namespace NPlot
 		/// </summary>
 		public class YPixelWorldLength : AxesConstraint
 		{
-			private double pWorldLength_ = 0.0;
+			private float pWorldLength_ = 0.0f;
 			private object holdFixedX_ = null;
 
 			/// <summary>
@@ -143,7 +143,7 @@ namespace NPlot
 			/// constraint.
 			/// </summary>
 			/// <param name="p">The world pixel length</param>
-			public YPixelWorldLength( double p )
+			public YPixelWorldLength( float p )
 			{
 				this.pWorldLength_ = p;
 			}
@@ -155,7 +155,7 @@ namespace NPlot
 			/// </summary>
 			/// <param name="p">The world pixel length</param>
 			/// <param name="holdFixedX">The position of this x-axis will be held constant. The other x-axis will be moved in order to force the constraint.</param>
-			public YPixelWorldLength( double p, PlotSurface2D.XAxisPosition holdFixedX )
+			public YPixelWorldLength( float p, PlotSurface2D.XAxisPosition holdFixedX )
 			{
 				this.pWorldLength_ = p;
 				this.holdFixedX_ = holdFixedX;
@@ -321,7 +321,7 @@ namespace NPlot
 		/// </remarks>
 		public class AspectRatio : AxesConstraint
 		{
-			private double a_;
+			private float a_;
 			private object holdFixedX_ = null;
 			private object holdFixedY_ = null;
 
@@ -329,7 +329,7 @@ namespace NPlot
 			/// Constructor.
 			/// </summary>
 			/// <param name="a">Aspect Ratio</param>
-			public AspectRatio( double a )
+			public AspectRatio( float a )
 			{
 				this.a_ = a;
 			}
@@ -342,7 +342,7 @@ namespace NPlot
 			/// When adjusting the position of axes, the specified axis will never
 			/// be moved.
 			/// </param>
-			public AspectRatio( double a, PlotSurface2D.XAxisPosition holdFixedX )
+			public AspectRatio( float a, PlotSurface2D.XAxisPosition holdFixedX )
 			{
 				this.a_ = a;
 				this.holdFixedX_ = holdFixedX;
@@ -356,7 +356,7 @@ namespace NPlot
 			/// When adjusting the position of axes, the 
 			/// specified axis will never be moved.
 			/// </param>
-			public AspectRatio( double a, PlotSurface2D.YAxisPosition holdFixedY )
+			public AspectRatio( float a, PlotSurface2D.YAxisPosition holdFixedY )
 			{
 				this.a_ = a;
 				this.holdFixedY_ = holdFixedY;
@@ -369,7 +369,7 @@ namespace NPlot
 			/// <param name="holdFixedX">When adjusting the position of axes, the specified axis will never be moved.</param>
 			/// <param name="holdFixedY">When adjusting the position of axes, the specified axis will never be moved.</param>
 			public AspectRatio( 
-				double a,
+				float a,
 				PlotSurface2D.XAxisPosition holdFixedX, 
 				PlotSurface2D.YAxisPosition holdFixedY )
 			{
@@ -389,15 +389,15 @@ namespace NPlot
 				PhysicalAxis pXAxis1, PhysicalAxis pYAxis1, 
 				PhysicalAxis pXAxis2, PhysicalAxis pYAxis2 )
 			{
-				double xWorldRange = Math.Abs( pXAxis1.Axis.WorldMax - pXAxis1.Axis.WorldMin );
-				double xPhysicalRange = Math.Abs( pXAxis1.PhysicalMax.X - pXAxis1.PhysicalMin.X );
-				double xDirPixelSize =  xWorldRange / xPhysicalRange;
+				float xWorldRange = Math.Abs( pXAxis1.Axis.WorldMax - pXAxis1.Axis.WorldMin );
+				float xPhysicalRange = Math.Abs( pXAxis1.PhysicalMax.X - pXAxis1.PhysicalMin.X );
+				float xDirPixelSize =  xWorldRange / xPhysicalRange;
 			
-				double yWorldRange = Math.Abs( pYAxis1.Axis.WorldMax - pYAxis1.Axis.WorldMin );
-				double yPhysicalRange = Math.Abs( pYAxis1.PhysicalMax.Y - pYAxis1.PhysicalMin.Y );
-				double yDirPixelSize =  yWorldRange / yPhysicalRange;
+				float yWorldRange = Math.Abs( pYAxis1.Axis.WorldMax - pYAxis1.Axis.WorldMin );
+				float yPhysicalRange = Math.Abs( pYAxis1.PhysicalMax.Y - pYAxis1.PhysicalMin.Y );
+				float yDirPixelSize =  yWorldRange / yPhysicalRange;
 
-				double currentAspectRatio = yDirPixelSize / xDirPixelSize;
+				float currentAspectRatio = yDirPixelSize / xDirPixelSize;
 
 				// we want to change the current aspect ratio to be the desired.
 				// to do this, we may only add the world pixel lengths.
@@ -407,7 +407,7 @@ namespace NPlot
 					// want to increase aspect ratio. Therefore, want to add some amount
 					// to yDirPixelSize (numerator).
 
-					double toAdd = ( this.a_ - currentAspectRatio ) * xDirPixelSize;
+					float toAdd = ( this.a_ - currentAspectRatio ) * xDirPixelSize;
 					int newHeight =
 						(int)( Math.Abs(pYAxis1.Axis.WorldMax - pYAxis1.Axis.WorldMin) / (yDirPixelSize + toAdd) );
 					int changeInHeight = (int)yPhysicalRange - newHeight;
@@ -446,7 +446,7 @@ namespace NPlot
 					// want to decrease aspect ratio. Therefore, want to add some amount
 					// to xDirPixelSize (denominator).
 
-					double toAdd = yDirPixelSize / this.a_ - xDirPixelSize;
+					float toAdd = yDirPixelSize / this.a_ - xDirPixelSize;
 					int newWidth = 
 						(int)( Math.Abs(pXAxis1.Axis.WorldMax - pXAxis1.Axis.WorldMin) / (xDirPixelSize + toAdd) );
 					int changeInWidth = (int)xPhysicalRange - newWidth;

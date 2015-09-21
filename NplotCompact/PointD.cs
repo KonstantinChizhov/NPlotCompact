@@ -40,19 +40,19 @@ namespace NPlot
 		/// <summary>
 		/// X-Coordinate of the point.
 		/// </summary>
-		public double X;
+		public float X;
 
 		/// <summary>
 		/// Y-Coordinate of the point.
 		/// </summary>
-		public double Y;
+		public float Y;
 
 		/// <summary>
 		/// Constructor
 		/// </summary>
 		/// <param name="x">X-Coordinate of the point.</param>
 		/// <param name="y">Y-Coordinate of the point.</param>
-		public PointD( double x, double y )
+		public PointD( float x, float y )
 		{
 			X = x;
 			Y = y;

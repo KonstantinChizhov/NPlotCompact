@@ -91,19 +91,19 @@ namespace NPlot
 		}
 
 		/// <summary>
-		/// Gets a color corresponding to a number between 0.0 and 1.0 inclusive. The color will
+		/// Gets a color corresponding to a number between 0.0f and 1.0f inclusive. The color will
 		/// be a linear interpolation of the min and max colors.
 		/// </summary>
-		/// <param name="prop">the number to get corresponding color for (between 0.0 and 1.0)</param>
+		/// <param name="prop">the number to get corresponding color for (between 0.0f and 1.0f)</param>
 		/// <returns>The color corresponding to the supplied number.</returns>
-		public Color GetColor( double prop )
+		public Color GetColor( float prop )
 		{
 			switch (stepType_)
 			{
 				case Type.RGB:
 				{
-					if (prop < 1.0/3.0) return Color.Red;
-					if (prop < 2.0/3.0) return Color.Green;
+					if (prop < 1.0f/3.0f) return Color.Red;
+					if (prop < 2.0f/3.0f) return Color.Green;
 					return Color.Blue;
 				}
 				case Type.Rainbow:

@@ -41,15 +41,15 @@ namespace NPlot
 	public class StartStep
 	{
 
-		private double start_;
-		private double step_;
+		private float start_;
+		private float step_;
 
 		/// <summary>
 		/// Constructor
 		/// </summary>
 		/// <param name="start">the first value of the set of points specified by this object.</param>
 		/// <param name="step">the step that specifies the separation between successive points.</param>
-		public StartStep( double start, double step )
+		public StartStep( float start, float step )
 		{
 			this.Start = start;
 			this.Step = step;
@@ -59,7 +59,7 @@ namespace NPlot
 		/// <summary>
 		/// The first value of the set of points specified by this object.
 		/// </summary>
-		public double Start
+		public float Start
 		{
 			get
 			{
@@ -75,7 +75,7 @@ namespace NPlot
 		/// <summary>
 		/// The step that specifies the separation between successive points.
 		/// </summary>
-		public double Step
+		public float Step
 		{
 			get
 			{

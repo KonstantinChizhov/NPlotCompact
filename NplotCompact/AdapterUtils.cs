@@ -90,8 +90,8 @@ namespace NPlot
 			/// <returns>the suggested axis</returns>
 			public Axis Get()
 			{
-				double t_min = double.MaxValue;
-				double t_max = double.MinValue;
+				float t_min = float.MaxValue;
+				float t_max = float.MinValue;
 
 				System.Collections.IEnumerator en = rows_[0].Table.Columns.GetEnumerator();
 				
@@ -104,8 +104,8 @@ namespace NPlot
 						continue;
 					}
 
-					double min;
-					double max;
+					float min;
+					float max;
 					if (Utils.RowArrayMinMax(rows_, out min, out max, colName))
 					{
 						if (min < t_min)
@@ -147,8 +147,8 @@ namespace NPlot
 			/// <returns>the suggested axis</returns>
             public Axis Get()
             {
-                double min;
-                double max;
+                float min;
+                float max;
 
                 if (Utils.ArrayMinMax(data_, out min, out max))
                 {
@@ -166,7 +166,7 @@ namespace NPlot
                     // + other constraints?
                 }
 
-                return new LinearAxis(0.0, 1.0);
+                return new LinearAxis(0.0f, 1.0f);
             }
         }
 
@@ -182,7 +182,7 @@ namespace NPlot
 			/// <returns>the suggested axis</returns>
             public Axis Get()
             {
-                return new LinearAxis(0.0, 1.0);
+                return new LinearAxis(0.0f, 1.0f);
             }
         }
 
@@ -217,12 +217,12 @@ namespace NPlot
                 {
                     return new LinearAxis(
                         abscissaData_.Start,
-                        abscissaData_.Start + (double)(ordinateData_.Count - 1) * abscissaData_.Step);
+                        abscissaData_.Start + (float)(ordinateData_.Count - 1) * abscissaData_.Step);
                 }
 
                 else
                 {
-                    return new LinearAxis(0.0, 1.0);
+                    return new LinearAxis(0.0f, 1.0f);
                 }
             }
         }
@@ -259,7 +259,7 @@ namespace NPlot
 
                 else
                 {
-                    return new LinearAxis(0.0, 1.0);
+                    return new LinearAxis(0.0f, 1.0f);
                 }
             }
         }
@@ -294,7 +294,7 @@ namespace NPlot
 
                 else
                 {
-                	return new LinearAxis(0.0, 1.0);
+                	return new LinearAxis(0.0f, 1.0f);
                 }
             }
         }
@@ -324,8 +324,8 @@ namespace NPlot
 			/// <returns>the suggested axis</returns>
             public Axis Get()
             {
-                double min;
-                double max;
+                float min;
+                float max;
 
                 if (Utils.RowArrayMinMax(rows_, out min, out max, columnName_))
                 {
@@ -340,7 +340,7 @@ namespace NPlot
                     }
                 }
 
-                return new LinearAxis(0.0, 1.0);
+                return new LinearAxis(0.0f, 1.0f);
             }
         }
 
@@ -370,8 +370,8 @@ namespace NPlot
 			/// <returns>the suggested axis</returns>
             public Axis Get()
             {
-                double min;
-                double max;
+                float min;
+                float max;
 
                 if (Utils.DataViewArrayMinMax(data_, out min, out max, columnName_))
                 {
@@ -386,7 +386,7 @@ namespace NPlot
                     }
                 }
 
-                return new LinearAxis(0.0, 1.0);
+                return new LinearAxis(0.0f, 1.0f);
             }
         }
 
@@ -527,7 +527,7 @@ namespace NPlot
             /// </summary>
             /// <param name="i">sequence number of data to get.</param>
             /// <returns>ith data value.</returns>
-            double Get(int i);
+            float Get(int i);
         }
 
         /// <summary>
@@ -551,9 +551,9 @@ namespace NPlot
 			/// </summary>
 			/// <param name="i">sequence number of data to get.</param>
 			/// <returns>ith data value.</returns>
-            public double Get(int i)
+            public float Get(int i)
             {
-                return Utils.ToDouble(data_[i]);
+                return Utils.ToSingle(data_[i]);
             }
         }
 
@@ -566,13 +566,13 @@ namespace NPlot
         /// </remarks>
 		public class DataGetter_DoublesArray : IDataGetter
 		{
-			private double[] data_;
+			private float[] data_;
 
 			/// <summary>
 			/// Constructor
 			/// </summary>
 			/// <param name="data">array of doubles that contains the data</param>
-			public DataGetter_DoublesArray(double[] data)          
+			public DataGetter_DoublesArray(float[] data)          
 			{
 				data_ = data;
 			}
@@ -582,7 +582,7 @@ namespace NPlot
 			/// </summary>
 			/// <param name="i">sequence number of data to get.</param>
 			/// <returns>ith data value.</returns>
-			public double Get(int i)          
+			public float Get(int i)          
 			{
 				return data_[i];
 			}
@@ -599,7 +599,7 @@ namespace NPlot
 			/// </summary>
 			/// <param name="i">sequence number of data to get.</param>
 			/// <returns>ith data value.</returns>
-            public double Get(int i)
+            public float Get(int i)
             {
                 throw new NPlotException( "No Data!" );
             }
@@ -626,9 +626,9 @@ namespace NPlot
 			/// </summary>
 			/// <param name="i">sequence number of data to get.</param>
 			/// <returns>ith data value.</returns>
-            public double Get(int i)
+            public float Get(int i)
             {
-                return data_.Start + (double)(i) * data_.Step;
+                return data_.Start + (float)(i) * data_.Step;
             }
         }
 
@@ -642,9 +642,9 @@ namespace NPlot
 			/// </summary>
 			/// <param name="i">sequence number of data to get.</param>
 			/// <returns>ith data value.</returns>
-            public double Get(int i)
+            public float Get(int i)
             {
-                return (double)i;
+                return (float)i;
             }
         }
 
@@ -673,9 +673,9 @@ namespace NPlot
 			/// </summary>
 			/// <param name="i">sequence number of data to get.</param>
 			/// <returns>ith data value.</returns>
-            public double Get(int i)
+            public float Get(int i)
             {
-                return Utils.ToDouble((rows_[i])[columnName_]);
+                return Utils.ToSingle((rows_[i])[columnName_]);
             }
         }
 
@@ -703,9 +703,9 @@ namespace NPlot
 			/// </summary>
 			/// <param name="i">sequence number of data to get.</param>
 			/// <returns>ith data value.</returns>
-            public double Get(int i)
+            public float Get(int i)
             {
-                return Utils.ToDouble((data_[i])[columnName_]);
+                return Utils.ToSingle((data_[i])[columnName_]);
             }
 
         }
@@ -754,12 +754,12 @@ namespace NPlot
 			/// <param name="index">index in the series to get data for</param>
 			/// <param name="seriesIndex">series number (column number) to get data for.</param>
 			/// <returns>the required data point.</returns>
-			public double PointAt( int index, int seriesIndex )
+			public float PointAt( int index, int seriesIndex )
 			{
 				if (seriesIndex < abscissaColumnNumber_)
-					return Utils.ToDouble( rows_[index][seriesIndex] );
+					return Utils.ToSingle( rows_[index][seriesIndex] );
 				else
-					return Utils.ToDouble( rows_[index][seriesIndex+1] );
+					return Utils.ToSingle( rows_[index][seriesIndex+1] );
 			}
 
 		}

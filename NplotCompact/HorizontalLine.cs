@@ -45,7 +45,7 @@ namespace NPlot
 		/// Constructor
 		/// </summary>
 		/// <param name="ordinateValue">ordinate (Y) value of line.</param>
-		public HorizontalLine( double ordinateValue )
+		public HorizontalLine( float ordinateValue )
 		{
 			this.value_ = ordinateValue;
 		}
@@ -56,7 +56,7 @@ namespace NPlot
 		/// </summary>
 		/// <param name="ordinateValue">ordinate (Y) value of line.</param>
 		/// <param name="color">draw the line using this color.</param>
-		public HorizontalLine( double ordinateValue, Color color )
+		public HorizontalLine( float ordinateValue, Color color )
 		{
 			this.value_ = ordinateValue;
 			this.pen_ = new Pen( color );
@@ -67,7 +67,7 @@ namespace NPlot
 		/// </summary>
 		/// <param name="ordinateValue">ordinate (Y) value of line.</param>
 		/// <param name="pen">Pen to use to draw the line.</param>
-		public HorizontalLine( double ordinateValue, Pen pen )
+		public HorizontalLine( float ordinateValue, Pen pen )
 		{
 			this.value_ = ordinateValue;
 			this.pen_ = pen;
@@ -196,11 +196,11 @@ namespace NPlot
 			// todo:  clip and proper logic for flipped axis min max.
 		}
 
-		private double value_;
+		private float value_;
 		/// <summary>
 		/// ordinate (Y) value to draw horizontal line at.
 		/// </summary>
-		public double OrdinateValue
+		public float OrdinateValue
 		{
 			get
 			{
@@ -248,7 +248,7 @@ namespace NPlot
 
 		/// <summary>
 		/// The line length is multiplied by this amount. Default
-		/// corresponds to a value of 1.0.
+		/// corresponds to a value of 1.0f.
 		/// </summary>
 		public float LengthScale
 		{

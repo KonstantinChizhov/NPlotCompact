@@ -60,7 +60,7 @@ namespace scpl
 }
 
 		private ISequenceAdapter data_;
-		private double _Total;
+		private float _Total;
 		const int _MaxBrush=8;
 		private Brush[] _brushes;
 

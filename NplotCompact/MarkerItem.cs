@@ -42,8 +42,8 @@ namespace NPlot
 	{
 
 		private Marker marker_; 
-		private double x_;
-		private double y_; 
+		private float x_;
+		private float y_; 
 
 
 		/// <summary>
@@ -63,7 +63,7 @@ namespace NPlot
 		/// </summary>
 		/// <param name="x">The world x position of the marker</param>
 		/// <param name="y">The world y position of the marker</param>
-		public MarkerItem( double x, double y )
+		public MarkerItem( float x, float y )
 		{
 			marker_ = new Marker( Marker.MarkerType.Square );
 			x_ = x;
@@ -77,7 +77,7 @@ namespace NPlot
 		/// <param name="marker">The marker to place on the chart.</param>
 		/// <param name="x">The world x position of the marker</param>
 		/// <param name="y">The world y position of the marker</param>
-		public MarkerItem( Marker marker, double x, double y )
+		public MarkerItem( Marker marker, float x, float y )
 		{
 			marker_ = marker;
 			x_ = x;

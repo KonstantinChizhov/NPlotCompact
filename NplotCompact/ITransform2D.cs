@@ -46,7 +46,7 @@ namespace NPlot
 		/// <summary>
 		/// Transforms the given world point to physical coordinates
 		/// </summary>
-		PointF Transform( double x, double y );
+		PointF Transform( float x, float y );
 
 		/// <summary>
 		/// Transforms the given world point to physical coordinates

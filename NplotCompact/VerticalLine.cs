@@ -45,7 +45,7 @@ namespace NPlot
 		/// Constructor
 		/// </summary>
 		/// <param name="abscissaValue">abscissa (X) value of line.</param>
-		public VerticalLine( double abscissaValue )
+		public VerticalLine( float abscissaValue )
 		{
 			this.value_ = abscissaValue;
 		}
@@ -56,7 +56,7 @@ namespace NPlot
 		/// </summary>
 		/// <param name="abscissaValue">abscissa (X) value of line.</param>
 		/// <param name="color">draw the line using this color.</param>
-		public VerticalLine( double abscissaValue, Color color )
+		public VerticalLine( float abscissaValue, Color color )
 		{
 			this.value_ = abscissaValue;
 			this.pen_ = new Pen( color );
@@ -68,7 +68,7 @@ namespace NPlot
 		/// </summary>
 		/// <param name="abscissaValue">abscissa (X) value of line.</param>
 		/// <param name="pen">Pen to use to draw the line.</param>
-		public VerticalLine( double abscissaValue, Pen pen )
+		public VerticalLine( float abscissaValue, Pen pen )
 		{
 			this.value_ = abscissaValue;
 			this.pen_ = pen;
@@ -201,7 +201,7 @@ namespace NPlot
 		/// <summary>
 		/// abscissa (X) value to draw horizontal line at.
 		/// </summary>
-		public double AbscissaValue
+		public float AbscissaValue
 		{
 			get
 			{
@@ -229,7 +229,7 @@ namespace NPlot
 		}
 
 		
-		private double value_;
+		private float value_;
 		private Pen pen_ = new Pen( Color.Black );
 
 
@@ -252,7 +252,7 @@ namespace NPlot
 
 		/// <summary>
 		/// The line length is multiplied by this amount. Default
-		/// corresponds to a value of 1.0.
+		/// corresponds to a value of 1.0f.
 		/// </summary>
 		public float LengthScale
 		{

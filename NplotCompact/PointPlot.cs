@@ -76,7 +76,7 @@ namespace NPlot
 
 			for (int i=0; i<data_.Count; ++i)
 			{
-				if ( !Double.IsNaN(data_[i].X) && !Double.IsNaN(data_[i].Y) )
+				if ( !Single.IsNaN(data_[i].X) && !Single.IsNaN(data_[i].Y) )
 				{
 					PointF xPos = xAxis.WorldToPhysical( data_[i].X, false);
                     if (xPos.X < leftCutoff_ || rightCutoff_ < xPos.X)
