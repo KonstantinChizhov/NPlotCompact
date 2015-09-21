@@ -3,6 +3,8 @@ Microsoft Visual Studio Solution File, Format Version 10.00
 # Visual Studio 2008
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NplotCompact", "NplotCompact\NplotCompact.csproj", "{66932CC5-2750-4614-82D1-48BF7E9346B1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test", "Test\Test.csproj", "{97DDE037-94EF-41E5-959A-BD772394D676}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -13,6 +15,12 @@ Global
 		{66932CC5-2750-4614-82D1-48BF7E9346B1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{66932CC5-2750-4614-82D1-48BF7E9346B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{66932CC5-2750-4614-82D1-48BF7E9346B1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{97DDE037-94EF-41E5-959A-BD772394D676}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{97DDE037-94EF-41E5-959A-BD772394D676}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{97DDE037-94EF-41E5-959A-BD772394D676}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{97DDE037-94EF-41E5-959A-BD772394D676}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{97DDE037-94EF-41E5-959A-BD772394D676}.Release|Any CPU.Build.0 = Release|Any CPU
+		{97DDE037-94EF-41E5-959A-BD772394D676}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
