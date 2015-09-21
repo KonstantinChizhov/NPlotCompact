@@ -427,8 +427,8 @@ namespace NPlot
 			yAxisPositions_ = new ArrayList();
             zPositions_ = new ArrayList();
             ordering_ = new SortedList();
-            FontFamily fontFamily = new FontFamily("Arial");
-			TitleFont = new Font(fontFamily, 14, FontStyle.Regular, GraphicsUnit.Pixel);
+            FontFamily fontFamily = FontFamily.GenericSansSerif;
+			TitleFont = new Font(fontFamily, 14, FontStyle.Regular);
 			padding_ = 10;
 			title_ = "";
 			autoScaleTitle_ = false;

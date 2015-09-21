@@ -70,8 +70,7 @@ namespace NPlot
 		public Grid()
 		{
 			minorGridPen_ = new Pen( Color.LightGray );
-			float[] pattern = {1.0f, 2.0f};
-			minorGridPen_.DashPattern = pattern;
+			minorGridPen_.DashStyle = DashStyle.Dash;
 			
 			majorGridPen_ = new Pen( Color.LightGray );
 

@@ -633,9 +633,9 @@ namespace NPlot
 			this.NumberFormat = null;
 			this.Reversed = false;
 
-			FontFamily fontFamily = new FontFamily( "Arial" );
-			this.TickTextFont = new Font( fontFamily, 10, FontStyle.Regular, GraphicsUnit.Pixel );
-			this.LabelFont = new Font( fontFamily, 12, FontStyle.Regular, GraphicsUnit.Pixel );
+			FontFamily fontFamily = FontFamily.GenericSansSerif;
+			this.TickTextFont = new Font( fontFamily, 10, FontStyle.Regular );
+			this.LabelFont = new Font( fontFamily, 12, FontStyle.Regular );
 			this.LabelColor = System.Drawing.Color.Black;
 			this.TickTextColor = System.Drawing.Color.Black;
 			this.linePen_ = new Pen( System.Drawing.Color.Black );

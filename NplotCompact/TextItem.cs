@@ -41,8 +41,8 @@ namespace NPlot
 	{
 		private void Init()
 		{
-			FontFamily fontFamily = new FontFamily("Arial");
-			font_ = new Font(fontFamily, 10, FontStyle.Regular, GraphicsUnit.Pixel);
+			FontFamily fontFamily = FontFamily.GenericSansSerif;
+			font_ = new Font(fontFamily, 10, FontStyle.Regular);
 		}
 
 		/// <summary>

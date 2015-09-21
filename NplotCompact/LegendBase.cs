@@ -50,7 +50,7 @@ namespace NPlot
 		/// </summary>
 		public LegendBase()
 		{
-			this.Font = new Font( new FontFamily("Arial"), 10, FontStyle.Regular, GraphicsUnit.Pixel );
+			this.Font = new Font( FontFamily.GenericSansSerif, 10, FontStyle.Regular );
 			this.BackgroundColor = Color.White;
 			this.BorderColor = Color.Black;
 			this.TextColor = Color.Black;
