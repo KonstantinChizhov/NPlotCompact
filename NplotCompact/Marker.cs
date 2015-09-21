@@ -359,13 +359,9 @@ namespace NPlot
 					Point p2 = new Point( x, y+h_ );
 					Point p3 = new Point( x+h_, y-h_ );
 					Point [] pts = new Point [3] { p1, p2, p3 };
-					GraphicsPath gp = new GraphicsPath();
-					gp.AddPolygon( pts );
-					g.DrawPath( pen_, gp );
-					if (this.filled_)
-					{
-						g.FillPath( brush_, gp );
-					}
+
+                    DrawMarkerPoints(g, pts);
+
 					break;
 				}
 				case MarkerType.TriangleUp:
@@ -374,13 +370,7 @@ namespace NPlot
 					Point p2 = new Point( x, y-h_ );
 					Point p3 = new Point( x+h_, y+h_ );
 					Point [] pts = new Point [3] { p1, p2, p3 };
-					GraphicsPath gp = new GraphicsPath();
-					gp.AddPolygon( pts );
-					g.DrawPath( pen_, gp );
-					if (this.filled_) 
-					{
-						g.FillPath( brush_, gp );
-					}
+                    DrawMarkerPoints(g, pts);
 					break;
 				}
 				case MarkerType.FilledCircle:
@@ -399,10 +389,7 @@ namespace NPlot
 					Point p2 = new Point( x, y+h_ );
 					Point p3 = new Point( x+h_, y-h_ );
 					Point [] pts = new Point [3] { p1, p2, p3 };
-					GraphicsPath gp = new GraphicsPath();
-					gp.AddPolygon( pts );
-					g.DrawPath( pen_, gp );
-					g.FillPath( brush_, gp );
+                    g.FillPolygon(brush_, pts);
 					break;
 				}
 				case MarkerType.Diamond:
@@ -412,13 +399,7 @@ namespace NPlot
 					Point p3 = new Point( x+h_, y );
 					Point p4 = new Point( x, y+h_ );
 					Point [] pts = new Point [4] { p1, p2, p3, p4 };
-					GraphicsPath gp = new GraphicsPath();
-					gp.AddPolygon( pts );
-					g.DrawPath( pen_, gp );
-					if (this.filled_)
-					{
-						g.FillPath( brush_, gp );
-					}
+                    DrawMarkerPoints(g, pts);
 					break;
 				}
 				case MarkerType.Flag:
@@ -430,13 +411,7 @@ namespace NPlot
 					Point p4 = new Point( x, y-size_+2*size_/3 );
 					g.DrawLine( pen_, p1, p2 );
 					Point [] pts = new Point [3] { p2, p3, p4 };
-					GraphicsPath gp = new GraphicsPath();
-					gp.AddPolygon( pts );
-					g.DrawPath( pen_, gp );
-					if (this.filled_)
-					{
-						g.FillPath( brush_, gp );
-					}
+                    DrawMarkerPoints(g, pts);
 					break;
 				}
 				case MarkerType.FlagDown:
@@ -447,13 +422,7 @@ namespace NPlot
 					Point p4 = new Point( x, y+size_-2*size_/3 );
 					g.DrawLine( pen_, p1, p2 );
 					Point [] pts = new Point [3] { p2, p3, p4 };
-					GraphicsPath gp = new GraphicsPath();
-					gp.AddPolygon( pts );
-					g.DrawPath( pen_, gp );
-					if (this.filled_)
-					{
-						g.FillPath( brush_, gp );
-					}
+                    DrawMarkerPoints(g, pts);
 					break;
 				}
 				case MarkerType.None:
@@ -461,6 +430,15 @@ namespace NPlot
 			}
 
 		}
+
+        private void DrawMarkerPoints(Graphics g, Point[] pts)
+        {
+            if (this.filled_)
+            {
+                g.FillPolygon(brush_, pts);
+            }
+            g.DrawPolygon(pen_, pts);
+        }
 
 
 	}

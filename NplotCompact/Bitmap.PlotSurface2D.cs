@@ -392,7 +392,7 @@ namespace NPlot
 				if (this.backColor_!=null)
 				{
 					Graphics g = Graphics.FromImage( b_ );
-					g.FillRectangle( (new Pen( (Color)this.backColor_)).Brush,0,0,b_.Width,b_.Height );
+					g.FillRectangle( (new Pen( (Color)this.backColor_)).GetBrush(),0,0,b_.Width,b_.Height );
 				}
 				ps_.Draw( Graphics.FromImage(b_), new System.Drawing.Rectangle(0,0,b_.Width,b_.Height) );
 			}

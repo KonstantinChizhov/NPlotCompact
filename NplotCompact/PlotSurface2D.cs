@@ -446,8 +446,6 @@ namespace NPlot
 			
 			this.legend_ = null;
 
-			smoothingMode_ = System.Drawing.Drawing2D.SmoothingMode.None;
-
 			axesConstraints_ = new ArrayList();
 		}
 
@@ -809,11 +807,11 @@ namespace NPlot
 			int titleHeight;
 			if (this.AutoScaleTitle)
 			{
-				titleHeight = Utils.ScaleFont(titleFont_, scale).Height;
+                titleHeight = Utils.ScaleFont(titleFont_, scale).GetHeight();
 			}
 			else
 			{
-				titleHeight = titleFont_.Height;
+                titleHeight = titleFont_.GetHeight();
 			}
 
 			//count number of new lines in title.
@@ -895,7 +893,7 @@ namespace NPlot
 				{
 					scaled_font = titleFont_;
 				}
-				g.DrawString( title_, scaled_font, this.titleBrush_, new PointF(x_center,y_center), titleDrawFormat_ );
+				g.DrawString( title_, scaled_font, this.titleBrush_, x_center, y_center);
 
 				return;
 			}
@@ -993,7 +991,8 @@ namespace NPlot
 					Utils.TiledImage( this.plotBackImage_ , new Size( 
 						((Rectangle)plotAreaBoundingBoxCache_).Width,
 						((Rectangle)plotAreaBoundingBoxCache_).Height ) ), 
-					(Rectangle)plotAreaBoundingBoxCache_ );
+					((Rectangle)plotAreaBoundingBoxCache_).X,
+                    ((Rectangle)plotAreaBoundingBoxCache_).Y);
 			}
 
 			// draw title
@@ -1008,7 +1007,7 @@ namespace NPlot
 			{
 				scaledFont = titleFont_;
 			}
-			g.DrawString( title_, scaledFont, this.titleBrush_,	new PointF(xt,yt), titleDrawFormat_ );
+			g.DrawString( title_, scaledFont, this.titleBrush_,	xt,yt);
 			
 			//count number of new lines in title.
 			int nlCount = 0;
@@ -1020,11 +1019,6 @@ namespace NPlot
 
 			SizeF s = g.MeasureString(title_,scaledFont);
 			bbTitleCache_ = new Rectangle( (int)(xt-s.Width/2), (int)(yt), (int)(s.Width), (int)(s.Height)*(nlCount+1) );
-
-			// draw drawables..
-			System.Drawing.Drawing2D.SmoothingMode smoothSave = g.SmoothingMode;
-
-			g.SmoothingMode = this.smoothingMode_;
 
 			bool legendDrawn = false;
 
@@ -1087,7 +1081,6 @@ namespace NPlot
 			this.pXAxis2Cache_ = pXAxis2;
 			this.pYAxis2Cache_ = pYAxis2;
 
-			g.SmoothingMode = smoothSave;
 
 			// now draw axes.
 			Rectangle axisBounds;

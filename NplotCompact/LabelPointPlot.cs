@@ -241,7 +241,7 @@ namespace NPlot
 				font_ = value;
 			}
 		}
-		private Font font_ = new Font( "Arial", 8.0f );
+		private Font font_ = new Font( FontFamily.GenericSansSerif, 8.0f, FontStyle.Regular );
 
 
 		/// <summary>
@@ -270,22 +270,24 @@ namespace NPlot
 						PointF xPos = xAxis.WorldToPhysical( pt.X, false);
 						PointF yPos = yAxis.WorldToPhysical( pt.Y, false);
 						Marker.Draw( g, (int)xPos.X, (int)yPos.Y );
+                        Brush black = new SolidBrush(Color.Black);
+
 						if ( textData[i] != "" )
 						{
 							SizeF size = g.MeasureString( textData[i], this.Font );
 							switch (labelTextPosition_)
 							{
 								case LabelPositions.Above:
-									g.DrawString( textData[i], font_, Brushes.Black, new PointF(xPos.X-size.Width/2,yPos.Y-size.Height-Marker.Size*2/3));
+                                    g.DrawString(textData[i], font_, black, xPos.X - size.Width / 2, yPos.Y - size.Height - Marker.Size * 2 / 3);
 									break;
 								case LabelPositions.Below:
-									g.DrawString( textData[i], font_, Brushes.Black, new PointF(xPos.X-size.Width/2,yPos.Y+Marker.Size*2/3));
+                                    g.DrawString(textData[i], font_, black, xPos.X - size.Width / 2, yPos.Y + Marker.Size * 2 / 3);
 									break;
 								case LabelPositions.Left:
-									g.DrawString( textData[i], font_, Brushes.Black, new PointF(xPos.X-size.Width-Marker.Size*2/3,yPos.Y-size.Height/2));
+                                    g.DrawString(textData[i], font_, black, xPos.X - size.Width - Marker.Size * 2 / 3, yPos.Y - size.Height / 2);
 									break;
 								case LabelPositions.Right:
-									g.DrawString( textData[i], font_, Brushes.Black, new PointF(xPos.X+Marker.Size*2/3,yPos.Y-size.Height/2));
+                                    g.DrawString(textData[i], font_, black, xPos.X + Marker.Size * 2 / 3, yPos.Y - size.Height / 2);
 									break;
 							}
 						}

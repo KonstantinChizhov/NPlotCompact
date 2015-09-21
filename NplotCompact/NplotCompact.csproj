@@ -66,6 +66,8 @@
     <Compile Include="BaseSequencePlot.cs" />
     <Compile Include="Bitmap.PlotSurface2D.cs" />
     <Compile Include="CandlePlot.cs" />
+    <Compile Include="Compatibility\DrawingExtensions.cs" />
+    <Compile Include="Compatibility\PointF.cs" />
     <Compile Include="DateTimeAxis.cs" />
     <Compile Include="FilledRegion.cs" />
     <Compile Include="FontScaler.cs" />

@@ -206,7 +206,7 @@ namespace NPlot
 					Pen p = new Pen( this.Gradient.GetColor( (data_[i,j]-this.dataMin_)/(this.dataMax_-this.dataMin_) ) );
 					int x = (int)xAxis.WorldToPhysical(wX,false).X;
 					int y = (int)yAxis.WorldToPhysical(wY,false).Y;
-					g.FillRectangle( p.Brush,
+                    g.FillRectangle(p.GetBrush(),
 						x,
 						y, 
 						(int)blockWidth,

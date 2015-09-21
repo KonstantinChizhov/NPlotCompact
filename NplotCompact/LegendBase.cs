@@ -203,7 +203,7 @@ namespace NPlot
 			else if ( this.BorderStyle == BorderType.Shadow )
 			{
 				int offset = (int)(4.0f * scale);
-				g.FillRectangle( new SolidBrush( Color.FromArgb(128, Color.Gray) ), position.X+offset, position.Y+offset, boxWidth, boxHeight );
+				g.FillRectangle( new SolidBrush(Color.Gray), position.X+offset, position.Y+offset, boxWidth, boxHeight );
 				g.FillRectangle( new SolidBrush( this.bgColor_ ), position.X, position.Y, boxWidth, boxHeight );
 				g.DrawRectangle( new Pen( this.borderColor_ ), position.X, position.Y, boxWidth, boxHeight );
 

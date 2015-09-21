@@ -324,11 +324,10 @@ namespace NPlot
 		public static Font ScaleFont( Font initial, double scale )
 		{
 			FontStyle fs = initial.Style;
-			GraphicsUnit gu = initial.Unit;
 			double sz = initial.Size;
 			sz = sz * scale ;
 			string nm = initial.Name;
-			return new Font( nm, (float)sz, fs, gu );
+			return new Font( nm, (float)sz, fs );
 		}
 
 
