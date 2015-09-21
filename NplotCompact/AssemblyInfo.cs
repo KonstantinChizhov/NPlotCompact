@@ -43,5 +43,5 @@ using System.Runtime.CompilerServices;
 [assembly: AssemblyCulture("")]
 [assembly: AssemblyVersion("0.9.10.0")]
 [assembly: CLSCompliant(true)]
-[assembly: AssemblyKeyFile(@"NPlot-key.snk")]
+
 
