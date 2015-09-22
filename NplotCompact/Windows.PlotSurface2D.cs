@@ -108,6 +108,11 @@ namespace NPlot.Windows
             lastKeyEventArgs_ = e;
         }
 
+        protected override void OnPaintBackground(PaintEventArgs e)
+        {
+            // All painting done in OnPaint
+        }
+
         /// <summary>
 		/// the paint event callback.
 		/// </summary>

@@ -873,8 +873,11 @@ namespace NPlot
 		/// <param name="g">The graphics surface on which to draw.</param>
 		/// <param name="bounds">A bounding box on this surface that denotes the area on the
 		/// surface to confine drawing to.</param>
-		public void Draw( Graphics g, Rectangle bounds )
+		public void Draw( Graphics targetGraphics, Rectangle bounds )
 		{
+            System.Drawing.Bitmap backBuffer = new System.Drawing.Bitmap(bounds.Width, bounds.Height);
+            Graphics g = Graphics.FromImage(backBuffer);
+            g.Clear(Color.White);
 			// determine font sizes and tick scale factor.
 			float scale = DetermineScaleFactor( bounds.Width, bounds.Height );
 
@@ -1098,7 +1101,7 @@ namespace NPlot
 			//if(this.ShowLegend)g.DrawRectangle( new Pen(Color.Chocolate, 3.0F), (Rectangle) bbLegendCache_);
 			g.DrawRectangle( new Pen(Color.DeepPink,2.0F), (Rectangle) bbTitleCache_);
 #endif
-
+            targetGraphics.DrawImage(backBuffer, 0, 0);
 		}
 
 
