@@ -897,7 +897,7 @@ namespace NPlot
 					scaled_font = titleFont_;
 				}
 				g.DrawString( title_, scaled_font, this.titleBrush_, x_center, y_center);
-
+                targetGraphics.DrawImage(backBuffer, 0, 0);
 				return;
 			}
 
