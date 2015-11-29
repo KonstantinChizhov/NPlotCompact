@@ -46,7 +46,7 @@
             this.plotSurface2D1.Location = new System.Drawing.Point(3, 3);
             this.plotSurface2D1.Name = "plotSurface2D1";
             this.plotSurface2D1.RightMenu = null;
-            this.plotSurface2D1.Size = new System.Drawing.Size(234, 241);
+            this.plotSurface2D1.Size = new System.Drawing.Size(234, 262);
             this.plotSurface2D1.TabIndex = 0;
             this.plotSurface2D1.Text = "plotSurface2D1";
             this.plotSurface2D1.Title = "";

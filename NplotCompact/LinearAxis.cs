@@ -284,7 +284,12 @@ namespace NPlot
 			
 			float adjustedMax = this.AdjustedWorldValue( WorldMax );
 			float adjustedMin = this.AdjustedWorldValue( WorldMin );
-
+			if (adjustedMax < adjustedMin)
+			{
+				float tmp = adjustedMin;
+				adjustedMin = adjustedMax;
+				adjustedMax = tmp;
+			}
 			// (2) determine distance between large ticks.
 			bool shouldCullMiddle;
 			float tickDist = this.DetermineLargeTickStep( 
@@ -401,7 +406,7 @@ namespace NPlot
 			// adjust world max and min for offset and scale properties of axis.
 			float adjustedMax = this.AdjustedWorldValue( WorldMax );
 			float adjustedMin = this.AdjustedWorldValue( WorldMin );
-			float range = adjustedMax - adjustedMin;
+			float range = Math.Abs(adjustedMax - adjustedMin);
 
 			// if axis has zero world length, then return arbitrary number.
 			if ( Utils.DoubleEqual( adjustedMax, adjustedMin ) )

@@ -29,9 +29,9 @@ namespace Test
                     ys1[i] = (ushort)((ys1[i] * 4 + ys1[i - 1] * 2 + ys1[i + 1] * 2) / 8);
                 }
 
-            LinePlot lp = new LinePlot(ys1, new StartStep(0.0f, 1.0f));
+            LinePlot lp = new LinePlot( ys1, new StartStep(100, -1) );
             lp.Pen = new Pen(Color.Blue);
-            LinePlot lp2 = new LinePlot(ys2, new StartStep(0.0f, 1.0f));
+            LinePlot lp2 = new LinePlot(ys2, new StartStep(100, -1));
             lp2.Pen = new Pen(Color.Red);
 
             Grid myGrid = new Grid();
@@ -47,6 +47,7 @@ namespace Test
         private void plotSurface2D1_Resize(object sender, EventArgs e)
         {
             this.plotSurface2D1.Invalidate();
+
         }
     }
 }
