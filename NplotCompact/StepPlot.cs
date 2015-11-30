@@ -61,13 +61,13 @@ namespace NPlot
 			SequenceAdapter data = 
 				new SequenceAdapter( this.DataSource, this.DataMember, this.OrdinateData, this.AbscissaData );
 
-			float leftCutoff = xAxis.PhysicalToWorld(xAxis.PhysicalMin, false);
-			float rightCutoff = xAxis.PhysicalToWorld(xAxis.PhysicalMax, false);
+			double leftCutoff = xAxis.PhysicalToWorld(xAxis.PhysicalMin, false);
+			double rightCutoff = xAxis.PhysicalToWorld(xAxis.PhysicalMax, false);
 
 			for (int i=0; i<data.Count; ++i)
 			{
 				PointD p1 = data[i];
-				if (Single.IsNaN(p1.X) || Single.IsNaN(p1.Y))
+				if (Double.IsNaN(p1.X) || Double.IsNaN(p1.Y))
 				{
 					continue;
 				}
@@ -77,7 +77,7 @@ namespace NPlot
 				if (i+1 != data.Count)
 				{
 					p2 = data[i+1];
-					if (Single.IsNaN(p2.X) || Single.IsNaN(p2.Y))
+					if (Double.IsNaN(p2.X) || Double.IsNaN(p2.Y))
 					{
 						continue;
 					}
@@ -99,7 +99,7 @@ namespace NPlot
                         p2 = p1;
                     }
 
-					float offset = p1.X - p2.X;
+					double offset = p1.X - p2.X;
 					p2.X = p1.X + offset;
 					p2.Y = p1.Y;
 					p3 = p2; 
@@ -107,7 +107,7 @@ namespace NPlot
 
 				if ( this.center_ )
 				{
-					float offset = ( p2.X - p1.X ) / 2.0f;
+					double offset = ( p2.X - p1.X ) / 2.0f;
 					p1.X -= offset;
 					p2.X -= offset;
 					p3.X -= offset;
@@ -177,8 +177,8 @@ namespace NPlot
 			PointD p3 = data[data.Count-2];
 			PointD p4 = data[data.Count-1];
 
-			float offset1;
-			float offset2;
+			double offset1;
+			double offset2;
 
 			if (!center_)
 			{
@@ -319,7 +319,7 @@ namespace NPlot
 
 		/// <summary>
 		/// The horizontal line length is multiplied by this amount. Default
-		/// corresponds to a value of 1.0f.
+		/// corresponds to a value of 1.0.
 		/// </summary>
 		public float WidthScale
 		{

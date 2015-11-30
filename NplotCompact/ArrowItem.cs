@@ -70,7 +70,7 @@ namespace NPlot
 		/// </summary>
 		/// <param name="position">The position the arrow points to.</param>
 		/// <param name="angle">angle of arrow with respect to x axis.</param>
-		public ArrowItem( PointD position, float angle )
+		public ArrowItem( PointD position, double angle )
 		{
 			to_ = position;
 			angle_ = -angle;
@@ -84,7 +84,7 @@ namespace NPlot
 		/// <param name="position">The position the arrow points to.</param>
 		/// <param name="angle">angle of arrow with respect to x axis.</param>
 		/// <param name="text">The text associated with the arrow.</param>
-		public ArrowItem( PointD position, float angle, string text )
+		public ArrowItem( PointD position, double angle, string text )
 		{
 			to_ = position;
 			angle_ = -angle;
@@ -119,7 +119,7 @@ namespace NPlot
 		/// done before I realised]. The simplest way to make angle represent
 		/// anti-clockwise rotation (as it is normal to do) is to make the 
 		/// get and set methods negate the provided value.</remarks>
-		public float Angle
+		public double Angle
 		{
 			get
 			{
@@ -130,7 +130,7 @@ namespace NPlot
 				angle_ = -value;
 			}
 		}
-		private float angle_ = -45.0f;
+		private double angle_ = -45.0;
 
 
 		/// <summary>
@@ -215,23 +215,23 @@ namespace NPlot
             if (this.To.Y > yAxis.Axis.WorldMax || this.To.Y < yAxis.Axis.WorldMin)
                 return;
 
-            float angle = this.angle_;
+            double angle = this.angle_;
 
-			if (this.angle_ < 0.0f)
+			if (this.angle_ < 0.0)
 			{
-				int mul = -(int)(this.angle_ / 360.0f) + 2;
-				angle = angle_ + 360.0f * (float)mul;
+				int mul = -(int)(this.angle_ / 360.0) + 2;
+				angle = angle_ + 360.0 * (double)mul;
 			}
 
-			float normAngle = (float)angle % 360.0f;   // angle in range 0 -> 360.
+			double normAngle = (double)angle % 360.0;   // angle in range 0 -> 360.
 
 			Point toPoint = new Point( 
 				(int)xAxis.WorldToPhysical( to_.X, true ).X,
 				(int)yAxis.WorldToPhysical( to_.Y, true ).Y );
 
 
-			float xDir = (float)Math.Cos( normAngle * 2.0f * Math.PI / 360.0f );
-			float yDir = (float)Math.Sin( normAngle * 2.0f * Math.PI / 360.0f );
+			float xDir = (float)Math.Cos( normAngle * 2.0 * Math.PI / 360.0 );
+			float yDir = (float)Math.Sin( normAngle * 2.0 * Math.PI / 360.0 );
 
 			toPoint.X += (int)(xDir*headOffset_);
 			toPoint.Y += (int)(yDir*headOffset_);
@@ -249,15 +249,15 @@ namespace NPlot
 
 			head[0] = toPoint;
 
-			xOff = headSize_ * (float)Math.Cos( (normAngle-headAngle_/2.0f) * 2.0f * Math.PI / 360.0f );
-			yOff = headSize_ * (float)Math.Sin( (normAngle-headAngle_/2.0f) * 2.0f * Math.PI / 360.0f );
+			xOff = headSize_ * (float)Math.Cos( (normAngle-headAngle_/2.0f) * 2.0 * Math.PI / 360.0 );
+			yOff = headSize_ * (float)Math.Sin( (normAngle-headAngle_/2.0f) * 2.0 * Math.PI / 360.0 );
 
 			head[1] = new Point(
 				(int)(toPoint.X + xOff),
 				(int)(toPoint.Y + yOff) );
 
-			float xOff2 = headSize_ * (float)Math.Cos( (normAngle+headAngle_/2.0f) * 2.0f * Math.PI / 360.0f );
-			float yOff2 = headSize_ * (float)Math.Sin( (normAngle+headAngle_/2.0f) * 2.0f * Math.PI / 360.0f );
+			float xOff2 = headSize_ * (float)Math.Cos( (normAngle+headAngle_/2.0f) * 2.0 * Math.PI / 360.0 );
+			float yOff2 = headSize_ * (float)Math.Sin( (normAngle+headAngle_/2.0f) * 2.0 * Math.PI / 360.0 );
 
 			head[2] = new Point(
 				(int)(toPoint.X + xOff2),

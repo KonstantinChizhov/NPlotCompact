@@ -111,7 +111,7 @@ namespace NPlot
 		/// </summary>
 		/// <param name="worldMin">Minimum world value</param>
 		/// <param name="worldMax">Maximum world value</param>
-		public LabelAxis( float worldMin, float worldMax )
+		public LabelAxis( double worldMin, double worldMax )
 			: base( worldMin, worldMax )
 		{
 			Init();
@@ -123,7 +123,7 @@ namespace NPlot
 		/// </summary>
 		/// <param name="name">The label</param>
 		/// <param name="val">The world value at which to place the label</param>
-		public void AddLabel( string name, float val )
+		public void AddLabel( string name, double val )
 		{
 			labels_.Add( name );
 			numbers_.Add( val );
@@ -154,22 +154,22 @@ namespace NPlot
 			boundingBox = null;
 
 			// draw the tick labels (but not the ticks).
-			PointF lastPos = WorldToPhysical( (float)numbers_[0], physicalMin, physicalMax, true );
+			PointF lastPos = WorldToPhysical( (double)numbers_[0], physicalMin, physicalMax, true );
 			for (int i=0; i<labels_.Count; ++i)
 			{
 				
-				if ((float)numbers_[i] > WorldMin && (float)numbers_[i] < WorldMax)
+				if ((double)numbers_[i] > WorldMin && (double)numbers_[i] < WorldMax)
 				{
 					
 					// check to make sure labels are far enough appart.
-					PointF thisPos = WorldToPhysical( (float)numbers_[i], physicalMin, physicalMax, true );
+					PointF thisPos = WorldToPhysical( (double)numbers_[i], physicalMin, physicalMax, true );
 					float dist = Utils.Distance( thisPos, lastPos );
 
 					if ( i==0 || (dist > this.PhysicalSpacingMin) )
 					{
 						lastPos = thisPos;
 						
-						this.DrawTick( g, (float)numbers_[i], 0, 
+						this.DrawTick( g, (double)numbers_[i], 0, 
 							(string)labels_[i],
 							new Point(0,0), 
 							physicalMin, physicalMax,
@@ -186,10 +186,10 @@ namespace NPlot
 			ArrayList largeTickPositions;
 			ArrayList smallTickPositions;
 			WorldTickPositions_FirstPass( physicalMin, physicalMax, out largeTickPositions, out smallTickPositions );
-			lastPos = WorldToPhysical( (float)largeTickPositions[0], physicalMin, physicalMax, true );
+			lastPos = WorldToPhysical( (double)largeTickPositions[0], physicalMin, physicalMax, true );
 			for (int i=0; i<largeTickPositions.Count; ++i)
 			{
-				float tickPos = (float)largeTickPositions[i];
+				double tickPos = (double)largeTickPositions[i];
 
 				// check to see that labels are far enough appart. 
 				PointF thisPos = WorldToPhysical( tickPos, physicalMin, physicalMax, true );
@@ -237,7 +237,7 @@ namespace NPlot
 			{
 				for (int i=0; i<labels_.Count; ++i)
 				{
-					if ((float)numbers_[i] > WorldMin && (float)numbers_[i] < WorldMax)
+					if ((double)numbers_[i] > WorldMin && (double)numbers_[i] < WorldMax)
 					{
 						largeTickPositions.Add( numbers_[i] );
 					}
@@ -260,7 +260,7 @@ namespace NPlot
 
 				for (int i=1; i<labels_.Count; ++i)
 				{
-					float worldPosition = ((float)numbers_copy[i] + (float)numbers_copy[i-1])/2.0f;
+					double worldPosition = ((double)numbers_copy[i] + (double)numbers_copy[i-1])/2.0;
 					if (worldPosition > WorldMin && worldPosition < WorldMax)
 					{
 						largeTickPositions.Add( worldPosition );

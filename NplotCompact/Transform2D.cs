@@ -89,7 +89,7 @@ namespace NPlot
 			/// <param name="x">x coordinate of world point to transform.</param>
 			/// <param name="y">y coordinate of world point to transform.</param>
 			/// <returns>the corresponding physical point.</returns>
-			public PointF Transform( float x, float y )
+			public PointF Transform( double x, double y )
 			{
 				return new PointF(
 					xAxis_.WorldToPhysical( x, false ).X,
@@ -143,7 +143,7 @@ namespace NPlot
 			/// <param name="x">x coordinate of world point to transform.</param>
 			/// <param name="y">y coordinate of world point to transform.</param>
 			/// <returns>the corresponding physical point.</returns>
-			public PointF Transform( float x, float y )
+			public PointF Transform( double x, double y )
 			{
 				return new PointF(
 					xAxis_.WorldToPhysicalClipped( x ),

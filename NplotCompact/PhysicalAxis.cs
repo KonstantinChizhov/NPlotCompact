@@ -113,7 +113,7 @@ namespace NPlot
 		/// <param name="coord">the world coordinate</param>
 		/// <param name="clip">if true, the physical position returned will be clipped to the physical max / min position as appropriate if the world value is outside the limits of the axis.</param>
 		/// <returns>the physical position of the coordinate along the axis.</returns>
-		public PointF WorldToPhysical( float coord, bool clip )
+		public PointF WorldToPhysical( double coord, bool clip )
 		{
 			return Axis.WorldToPhysical( coord, PhysicalMin, PhysicalMax, clip );
 		}
@@ -129,7 +129,7 @@ namespace NPlot
 		/// range if this is closer to the axis line. If false, such values will
 		/// be clipped to be either WorldMin or WorldMax as appropriate.</param>
 		/// <returns>the world value of the point's projection onto the axis.</returns>
-		public float PhysicalToWorld( Point p, bool clip )
+		public double PhysicalToWorld( Point p, bool clip )
 		{
 			return Axis.PhysicalToWorld( p, PhysicalMin, PhysicalMax, clip );
 		}
@@ -143,21 +143,21 @@ namespace NPlot
 		/// <param name="max">The lower right point of the selection.</param>
 		public void SetWorldLimitsFromPhysical( Point min, Point max )
 		{
-			float minc;
-			float maxc;
+			double minc;
+			double maxc;
 			if (Axis != null)
 			{
 				minc = Axis.WorldMin;
 				maxc = Axis.WorldMax;
 				if ( !Axis.Reversed ) 
 				{
-					float tmp = this.PhysicalToWorld(min,true);
+					double tmp = this.PhysicalToWorld(min,true);
 					Axis.WorldMax = this.PhysicalToWorld(max,true);
 					Axis.WorldMin = tmp;
 				}
 				else
 				{
-					float tmp = this.PhysicalToWorld(min,true);
+					double tmp = this.PhysicalToWorld(min,true);
 					Axis.WorldMin = this.PhysicalToWorld(max,true);
 					Axis.WorldMax = tmp;
 				}
@@ -168,8 +168,8 @@ namespace NPlot
 				// but if the GDI+ draw leads to an overflow the
 				// graphic surface becomes unusable anymore and I
 				// had difficulty to trap the error.
-				float half = (Axis.WorldMin + Axis.WorldMax)/2;
-				float width = Axis.WorldMax - Axis.WorldMin;
+				double half = (Axis.WorldMin + Axis.WorldMax)/2;
+				double width = Axis.WorldMax - Axis.WorldMin;
 				if (Math.Abs(half/width) > 1.0e12)
 				{
 					Axis.WorldMin = minc;
@@ -244,7 +244,7 @@ namespace NPlot
 		/// <summary>
 		/// The length in world coordinates of one pixel. 
 		/// </summary>
-		public float PixelWorldLength
+		public double PixelWorldLength
 		{
 			get
 			{

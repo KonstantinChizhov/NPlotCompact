@@ -36,7 +36,7 @@ namespace NPlot
 {
 
 	/// <summary>
-	/// Stores a set of four float numbers that represent the location and size of
+	/// Stores a set of four double numbers that represent the location and size of
 	/// a rectangle. TODO: implement more functionality similar to Drawing.RectangleF.
 	/// </summary>
 	public struct RectangleD
@@ -44,7 +44,7 @@ namespace NPlot
 		/// <summary>
 		/// Constructor
 		/// </summary>
-		public RectangleD( float x, float y, float width, float height )
+		public RectangleD( double x, double y, double width, double height )
 		{
 			x_ = x;
 			y_ = y;
@@ -55,7 +55,7 @@ namespace NPlot
 		/// <summary>
 		/// The rectangle height.
 		/// </summary>
-		public float Height
+		public double Height
 		{
 			get
 			{
@@ -70,7 +70,7 @@ namespace NPlot
 		/// <summary>
 		/// The rectangle width.
 		/// </summary>
-		public float Width
+		public double Width
 		{
 			get
 			{
@@ -85,7 +85,7 @@ namespace NPlot
 		/// <summary>
 		/// The minimum x coordinate of the rectangle.
 		/// </summary>
-		public float X
+		public double X
 		{
 			get
 			{
@@ -101,7 +101,7 @@ namespace NPlot
 		/// <summary>
 		/// The minimum y coordinate of the rectangle.
 		/// </summary>
-		public float Y
+		public double Y
 		{
 			get
 			{
@@ -114,10 +114,10 @@ namespace NPlot
 		}
 
 
-		private float x_;
-		private float y_;
-		private float width_;
-		private float height_;
+		private double x_;
+		private double y_;
+		private double width_;
+		private double height_;
 
 	}
 }

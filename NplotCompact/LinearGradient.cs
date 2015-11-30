@@ -44,8 +44,8 @@ namespace NPlot
 		/// <summary>
 		/// Constructor.
 		/// </summary>
-		/// <param name="minColor">The color corresponding to 0.0f</param>
-		/// <param name="maxColor">The color corresponding to 1.0f</param>
+		/// <param name="minColor">The color corresponding to 0.0</param>
+		/// <param name="maxColor">The color corresponding to 1.0</param>
 		public LinearGradient( Color minColor, Color maxColor )
 		{
 			this.minColor_ = minColor;
@@ -54,7 +54,7 @@ namespace NPlot
 
 
 		/// <summary>
-		/// The color corresponding to 0.0f
+		/// The color corresponding to 0.0
 		/// </summary>
 		public Color MaxColor
 		{
@@ -71,7 +71,7 @@ namespace NPlot
 
 
 		/// <summary>
-		/// The color corresponding to 1.0f
+		/// The color corresponding to 1.0
 		/// </summary>
 		public Color MinColor
 		{
@@ -105,31 +105,31 @@ namespace NPlot
 
 
 		/// <summary>
-		/// Gets a color corresponding to a number between 0.0f and 1.0f inclusive. The color will
+		/// Gets a color corresponding to a number between 0.0 and 1.0 inclusive. The color will
 		/// be a linear interpolation of the min and max colors.
 		/// </summary>
-		/// <param name="prop">the number to get corresponding color for (between 0.0f and 1.0f)</param>
+		/// <param name="prop">the number to get corresponding color for (between 0.0 and 1.0)</param>
 		/// <returns>The color corresponding to the supplied number.</returns>
-		public Color GetColor( float prop )
+		public Color GetColor( double prop )
 		{
-            if (Single.IsNaN(prop))
+            if (Double.IsNaN(prop))
             {
                 return voidColor_;
             }
 
-			if ( prop <= 0.0f )
+			if ( prop <= 0.0 )
 			{
 				return this.MinColor;
 			}
 
-			if ( prop >= 1.0f )
+			if ( prop >= 1.0 )
 			{
 				return this.MaxColor;
 			}
 
-			byte r = (byte)((int)(this.MinColor.R) + (int)(((float)this.MaxColor.R - (float)this.MinColor.R)*prop));
-			byte g = (byte)((int)(this.MinColor.G) + (int)(((float)this.MaxColor.G - (float)this.MinColor.G)*prop));
-			byte b = (byte)((int)(this.MinColor.B) + (int)(((float)this.MaxColor.B - (float)this.MinColor.B)*prop));
+			byte r = (byte)((int)(this.MinColor.R) + (int)(((double)this.MaxColor.R - (double)this.MinColor.R)*prop));
+			byte g = (byte)((int)(this.MinColor.G) + (int)(((double)this.MaxColor.G - (double)this.MinColor.G)*prop));
+			byte b = (byte)((int)(this.MinColor.B) + (int)(((double)this.MaxColor.B - (double)this.MinColor.B)*prop));
 
 			return Color.FromArgb(r,g,b);
 		}

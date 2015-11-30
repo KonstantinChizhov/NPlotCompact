@@ -265,7 +265,7 @@ namespace NPlot
 				try
 				{
 					PointD pt = data[i];
-					if ( !Single.IsNaN(pt.X) && !Single.IsNaN(pt.Y) )
+					if ( !Double.IsNaN(pt.X) && !Double.IsNaN(pt.Y) )
 					{
 						PointF xPos = xAxis.WorldToPhysical( pt.X, false);
 						PointF yPos = yAxis.WorldToPhysical( pt.Y, false);

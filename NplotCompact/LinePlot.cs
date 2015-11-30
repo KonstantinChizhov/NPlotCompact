@@ -123,8 +123,8 @@ namespace NPlot
 			{
 
                 // prepare for clipping
-                float leftCutoff = xAxis.PhysicalToWorld(xAxis.PhysicalMin, false);
-                float rightCutoff = xAxis.PhysicalToWorld(xAxis.PhysicalMax, false);
+                double leftCutoff = xAxis.PhysicalToWorld(xAxis.PhysicalMin, false);
+                double rightCutoff = xAxis.PhysicalToWorld(xAxis.PhysicalMax, false);
 				if (leftCutoff > rightCutoff)
 				{
 					Utils.Swap(ref leftCutoff, ref rightCutoff);
@@ -132,7 +132,7 @@ namespace NPlot
 				if (drawShadow)
                 {
                     // correct cut-offs
-                    float shadowCorrection =
+                    double shadowCorrection =
                         xAxis.PhysicalToWorld(ShadowOffset, false) - xAxis.PhysicalToWorld(new Point(0,0), false);
                     leftCutoff -= shadowCorrection;
                     rightCutoff -= shadowCorrection;
@@ -141,12 +141,12 @@ namespace NPlot
                 for (int i = 1; i < numberPoints; ++i)
 				{
 					// check to see if any values null. If so, then continue.
-					float dx1 = data[i-1].X;
-					float dx2 = data[i].X;
-					float dy1 = data[i-1].Y;
-					float dy2 = data[i].Y;
-					if ( Single.IsNaN(dx1) || Single.IsNaN(dy1) ||
-						Single.IsNaN(dx2) || Single.IsNaN(dy2) )
+					double dx1 = data[i-1].X;
+					double dx2 = data[i].X;
+					double dy1 = data[i-1].Y;
+					double dy2 = data[i].Y;
+					if ( Double.IsNaN(dx1) || Double.IsNaN(dy1) ||
+						Double.IsNaN(dx2) || Double.IsNaN(dy2) )
 					{
 						continue;
 					}

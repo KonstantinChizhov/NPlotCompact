@@ -34,12 +34,6 @@ namespace Test
             LinePlot lp2 = new LinePlot(ys2, new StartStep(100, -1));
             lp2.Pen = new Pen(Color.Red);
 
-            Grid myGrid = new Grid();
-            myGrid.VerticalGridType = Grid.GridType.Fine;
-            myGrid.HorizontalGridType = Grid.GridType.Fine;
-
-            this.plotSurface2D1.Add(myGrid);
-
             this.plotSurface2D1.Add(lp);
             this.plotSurface2D1.Add(lp2);
         }

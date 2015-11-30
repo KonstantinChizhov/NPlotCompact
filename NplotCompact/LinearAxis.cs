@@ -102,7 +102,7 @@ namespace NPlot
 		/// </summary>
 		/// <param name="worldMin">the world minimum value of the axis.</param>
 		/// <param name="worldMax">the world maximum value of the axis.</param>
-		public LinearAxis( float worldMin, float worldMax )
+		public LinearAxis( double worldMin, double worldMax )
 			: base( worldMin, worldMax )
 		{
 			Init();
@@ -148,18 +148,18 @@ namespace NPlot
 			{
 				for (int i = 0; i < largeTickPositions.Count; ++i)
 				{
-					float labelNumber = (float)largeTickPositions[i];
+					double labelNumber = (double)largeTickPositions[i];
 
 					// TODO: Find out why zero is sometimes significantly not zero [seen as high as 10^-16].
 					if (Math.Abs(labelNumber) < 0.000000000000001)
 					{
-						labelNumber = 0.0f;
+						labelNumber = 0.0;
 					}
 
 					StringBuilder label = new StringBuilder();
 					label.AppendFormat(this.NumberFormat, labelNumber);
 
-					this.DrawTick( g, ((float)largeTickPositions[i]/this.scale_-this.offset_), 
+					this.DrawTick( g, ((double)largeTickPositions[i]/this.scale_-this.offset_), 
 						this.LargeTickSize, label.ToString(),
 						new Point(0,0), physicalMin, physicalMax, 
 						out tLabelOffset, out tBoundingBox );
@@ -172,7 +172,7 @@ namespace NPlot
 
 			for (int i = 0; i<smallTickPositions.Count; ++i)
 			{
-				this.DrawTick( g, ((float)smallTickPositions[i]/this.scale_-this.offset_), 
+				this.DrawTick( g, ((double)smallTickPositions[i]/this.scale_-this.offset_), 
 					this.SmallTickSize, "", 
 					new Point(0, 0), physicalMin, physicalMax, 
 					out tLabelOffset, out tBoundingBox );
@@ -205,22 +205,22 @@ namespace NPlot
 
 			int physicalAxisLength = Utils.Distance( physicalMin, physicalMax );
 
-			float adjustedMax = this.AdjustedWorldValue( WorldMax );
-			float adjustedMin = this.AdjustedWorldValue( WorldMin );
+			double adjustedMax = this.AdjustedWorldValue( WorldMax );
+			double adjustedMin = this.AdjustedWorldValue( WorldMin );
 
 			smallTickPositions = new ArrayList();
 
 			// TODO: Can optimize this now.
 			bool shouldCullMiddle;
-			float bigTickSpacing = this.DetermineLargeTickStep( physicalAxisLength, out shouldCullMiddle );
+			double bigTickSpacing = this.DetermineLargeTickStep( physicalAxisLength, out shouldCullMiddle );
 
 			int nSmall = this.DetermineNumberSmallTicks( bigTickSpacing );
-			float smallTickSpacing = bigTickSpacing / (float)nSmall;
+			double smallTickSpacing = bigTickSpacing / (double)nSmall;
 
 			// if there is at least one big tick
 			if (largeTickPositions.Count > 0)
 			{
-				float pos1 = (float)largeTickPositions[0] - smallTickSpacing;
+				double pos1 = (double)largeTickPositions[0] - smallTickSpacing;
 				while (pos1 > adjustedMin)
 				{
 					smallTickPositions.Add( pos1 );
@@ -232,7 +232,7 @@ namespace NPlot
 			{
 				for (int j = 1; j < nSmall; ++j )
 				{
-					float pos = (float)largeTickPositions[i] + ((float)j) * smallTickSpacing;
+					double pos = (double)largeTickPositions[i] + ((double)j) * smallTickSpacing;
 					if (pos <= adjustedMax)
 					{
 						smallTickPositions.Add( pos );
@@ -248,7 +248,7 @@ namespace NPlot
 		/// </summary>
 		/// <param name="world">world value to adjust</param>
 		/// <returns>adjusted world value</returns>
-		public float AdjustedWorldValue( float world )
+		public double AdjustedWorldValue( double world )
 		{
 			return world * this.scale_ + this.offset_;
 		}
@@ -277,45 +277,45 @@ namespace NPlot
 
 			// (1) error check
 
-			if ( float.IsNaN(WorldMin) || float.IsNaN(WorldMax) )
+			if ( double.IsNaN(WorldMin) || double.IsNaN(WorldMax) )
 			{
 				throw new NPlotException( "world extent of axis not set." );
 			}
 			
-			float adjustedMax = this.AdjustedWorldValue( WorldMax );
-			float adjustedMin = this.AdjustedWorldValue( WorldMin );
+			double adjustedMax = this.AdjustedWorldValue( WorldMax );
+			double adjustedMin = this.AdjustedWorldValue( WorldMin );
 			if (adjustedMax < adjustedMin)
 			{
-				float tmp = adjustedMin;
+				double tmp = adjustedMin;
 				adjustedMin = adjustedMax;
 				adjustedMax = tmp;
 			}
 			// (2) determine distance between large ticks.
 			bool shouldCullMiddle;
-			float tickDist = this.DetermineLargeTickStep( 
+			double tickDist = this.DetermineLargeTickStep( 
 				Utils.Distance(physicalMin, physicalMax),
 				out shouldCullMiddle );
 
 			// (3) determine starting position.
 		
-			float first = 0.0f;
+			double first = 0.0f;
 
-			if (!float.IsNaN(largeTickValue_)) 
+			if (!double.IsNaN(largeTickValue_)) 
 			{
 				// this works for both case when largTickValue_ lt or gt adjustedMin.
-				first = largeTickValue_ + ((float)Math.Ceiling((adjustedMin-largeTickValue_)/tickDist))*tickDist;
+				first = largeTickValue_ + (Math.Ceiling((adjustedMin-largeTickValue_)/tickDist))*tickDist;
 			}
 
 			else
 			{
-				if( adjustedMin > 0.0f )
+				if( adjustedMin > 0.0 )
 				{
-                    float nToFirst = (float)Math.Floor(adjustedMin / tickDist) + 1.0f;
+					double nToFirst = Math.Floor(adjustedMin / tickDist) + 1.0f;
 					first = nToFirst * tickDist;
 				}
 				else
 				{
-                    float nToFirst = (float)Math.Floor(-adjustedMin / tickDist) - 1.0f;
+					double nToFirst = Math.Floor(-adjustedMin/tickDist) - 1.0f;
 					first = -nToFirst * tickDist;
 				}
 
@@ -331,10 +331,10 @@ namespace NPlot
 			
 			largeTickPositions = new ArrayList();
 
-			if (tickDist < 0.0f) // some sanity checking. TODO: remove this.
+			if (tickDist < 0.0) // some sanity checking. TODO: remove this.
 				throw new NPlotException( "Tick dist is negative" );
 
-			float position = first;
+			double position = first;
 			int safetyCount = 0;
 			while (
 				(position <= adjustedMax) && 
@@ -380,17 +380,17 @@ namespace NPlot
 		/// returns true.</param>
 		/// <returns>Large tick spacing</returns>
 		/// <remarks>TODO: This can be optimised a bit.</remarks>
-		private float DetermineLargeTickStep( float physicalLength, out bool shouldCullMiddle )
+		private double DetermineLargeTickStep( float physicalLength, out bool shouldCullMiddle )
 		{
 			shouldCullMiddle = false;
 
-			if ( float.IsNaN(WorldMin) || float.IsNaN(WorldMax) )
+			if ( double.IsNaN(WorldMin) || double.IsNaN(WorldMax) )
 			{
 				throw new NPlotException( "world extent of axis not set." );
 			}
 
 			// if the large tick has been explicitly set, then return this.
-			if ( !float.IsNaN(largeTickStep_) )
+			if ( !double.IsNaN(largeTickStep_) )
 			{
 				if ( largeTickStep_ <= 0.0f )
 				{
@@ -404,9 +404,9 @@ namespace NPlot
 			// otherwise we need to calculate the large tick step ourselves.
 
 			// adjust world max and min for offset and scale properties of axis.
-			float adjustedMax = this.AdjustedWorldValue( WorldMax );
-			float adjustedMin = this.AdjustedWorldValue( WorldMin );
-			float range = Math.Abs(adjustedMax - adjustedMin);
+			double adjustedMax = this.AdjustedWorldValue( WorldMax );
+			double adjustedMin = this.AdjustedWorldValue( WorldMin );
+			double range = Math.Abs(adjustedMax - adjustedMin);
 
 			// if axis has zero world length, then return arbitrary number.
 			if ( Utils.DoubleEqual( adjustedMax, adjustedMin ) )
@@ -414,7 +414,7 @@ namespace NPlot
 				return 1.0f;
 			}
 
-			float approxTickStep;
+			double approxTickStep;
 			if (TicksIndependentOfPhysicalExtent)
 			{
 				approxTickStep = range / 6.0f;
@@ -424,8 +424,8 @@ namespace NPlot
 				approxTickStep = (MinPhysicalLargeTickStep / physicalLength) * range;
 			}
 
-            float exponent = (float)Math.Floor(Math.Log10(approxTickStep));
-            float mantissa = (float)Math.Pow(10.0f, Math.Log10(approxTickStep) - exponent);
+			double exponent = Math.Floor( Math.Log10( approxTickStep ) );
+			double mantissa = Math.Pow( 10.0, Math.Log10( approxTickStep ) - exponent );
 
 			// determine next whole mantissa below the approx one.
 			int mantissaIndex = Mantissas.Length-1;
@@ -443,14 +443,14 @@ namespace NPlot
 			if (mantissaIndex == Mantissas.Length)
 			{
 				mantissaIndex = 0;
-				exponent += 1.0f;
+				exponent += 1.0;
 			}
 
 			if (!TicksIndependentOfPhysicalExtent)
 			{
 				// now make sure that the returned value is such that at least two 
 				// large tick marks will be displayed.
-                float tickStep = (float)Math.Pow(10.0f, exponent) * Mantissas[mantissaIndex];
+				double tickStep = Math.Pow( 10.0, exponent ) * Mantissas[mantissaIndex];
 				float physicalStep = (float)((tickStep / range) * physicalLength);
 
 				while (physicalStep > physicalLength/2)
@@ -461,16 +461,16 @@ namespace NPlot
 					if (mantissaIndex == -1)
 					{
 						mantissaIndex = Mantissas.Length-1;
-						exponent -= 1.0f;
+						exponent -= 1.0;
 					}
 
-                    tickStep = (float)Math.Pow(10.0f, exponent) * Mantissas[mantissaIndex];
+					tickStep = Math.Pow( 10.0, exponent ) * Mantissas[mantissaIndex];
 					physicalStep = (float)((tickStep / range) * physicalLength);
 				}
 			}
 
 			// and we're done.
-            return (float)Math.Pow(10.0f, exponent) * Mantissas[mantissaIndex];
+			return Math.Pow( 10.0, exponent ) * Mantissas[mantissaIndex];
 
 		}
 
@@ -481,7 +481,7 @@ namespace NPlot
 		/// </summary>
 		/// <param name="bigTickDist">the large tick step.</param>
 		/// <returns>the number of small ticks to place between large ticks.</returns>
-		private int DetermineNumberSmallTicks( float bigTickDist )
+		private int DetermineNumberSmallTicks( double bigTickDist )
 		{
 
 			if (this.numberSmallTicks_ != null)
@@ -497,8 +497,8 @@ namespace NPlot
 			if (bigTickDist > 0.0f)
 			{
 
-                float exponent = (float)Math.Floor(Math.Log10(bigTickDist));
-                float mantissa = (float)Math.Pow(10.0f, Math.Log10(bigTickDist) - exponent);
+				double exponent = Math.Floor( Math.Log10( bigTickDist ) );
+				double mantissa = Math.Pow( 10.0, Math.Log10( bigTickDist ) - exponent );
 
 				for (int i=0; i<Mantissas.Length; ++i)
 				{
@@ -519,7 +519,7 @@ namespace NPlot
 		/// The distance between large ticks. If this is set to NaN [default],
 		/// this distance will be calculated automatically.
 		/// </summary>
-		public float LargeTickStep
+		public double LargeTickStep
 		{
 			set
 			{
@@ -533,14 +533,14 @@ namespace NPlot
 		/// <summary>
 		/// If set !NaN, gives the distance between large ticks.
 		/// </summary>
-		private float largeTickStep_ = float.NaN;
+		private double largeTickStep_ = double.NaN;
 
 
 		/// <summary>
 		/// If set, a large tick will be placed at this position, and other large ticks will 
 		/// be placed relative to this position.
 		/// </summary>
-		public float LargeTickValue
+		public double LargeTickValue
 		{
 			set
 			{
@@ -551,7 +551,7 @@ namespace NPlot
 				return largeTickValue_;
 			}
 		}
-		private float largeTickValue_ = float.NaN;
+		private double largeTickValue_ = double.NaN;
 
 		/// <summary>
 		/// The number of small ticks between large ticks.
@@ -575,7 +575,7 @@ namespace NPlot
 		/// (labelWorld = world * scale + offset). This does not
 		/// affect the "real" world range of the axis. 
 		/// </summary>
-		public float Scale
+		public double Scale
 		{
 			get
 			{
@@ -592,7 +592,7 @@ namespace NPlot
 		/// (labelWorld = axisWorld * scale + offset). This does not
 		/// affect the "real" world range of the axis.
 		/// </summary>
-		public float Offset
+		public double Offset
 		{
 			get
 			{
@@ -618,7 +618,7 @@ namespace NPlot
 		/// calculated automatically. The value will be of the form
 		/// m*10^e for some m in this set.
 		/// </summary>
-		public float[] Mantissas = {1.0f, 2.0f, 5.0f};
+		public double[] Mantissas = {1.0, 2.0, 5.0};
 
 		/// <summary>
 		/// If NumberOfSmallTicks isn't specified then .... 
@@ -628,8 +628,8 @@ namespace NPlot
 		public int[] SmallTickCounts = {4, 1, 4};
 
 
-		private float offset_ = 0.0f;
+		private double offset_ = 0.0;
 
-		private float scale_ = 1.0f;
+		private double scale_ = 1.0;
 	}
 }

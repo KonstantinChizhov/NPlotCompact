@@ -47,9 +47,9 @@ namespace NPlot
 		private int pMax_;
 		private int pLength_;      // cached.
 
-		private float worldMin_;
-		private float worldMax_;
-		private float worldLength_; // cached.
+		private double worldMin_;
+		private double worldMax_;
+		private double worldLength_; // cached.
 		
 
 		/// <summary>
@@ -87,7 +87,7 @@ namespace NPlot
 		/// </summary>
 		/// <param name="world">world coordinate to determine physical coordinate for.</param>
 		/// <returns>the physical coordinate corresoindng to the supplied world coordinate.</returns>
-		public float WorldToPhysical( float world )
+		public float WorldToPhysical( double world )
 		{
 			return (float)(((world-worldMin_) / worldLength_) * (float)pLength_ + (float)pMin_);
 		}
@@ -99,7 +99,7 @@ namespace NPlot
 		/// </summary>
 		/// <param name="world">world coordinate to determine physical coordinate for.</param>
 		/// <returns>the physical coordinate corresoindng to the supplied world coordinate.</returns>
-		public float WorldToPhysicalClipped( float world )
+		public float WorldToPhysicalClipped( double world )
 		{
 			if (world > worldMax_)
 			{
@@ -121,7 +121,7 @@ namespace NPlot
 		/// </summary>
 		/// <param name="physical">physical coordinate to determine world coordinate for.</param>
 		/// <returns>the world coordinate corresponding to the supplied </returns>
-		public float PhysicalToWorld( float physical )
+		public double PhysicalToWorld( float physical )
 		{
 			return ((float)(physical-pMin_) / (float)pLength_) * worldLength_ + worldMin_;
 		}
